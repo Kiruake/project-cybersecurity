@@ -30,7 +30,7 @@
 
 <style scoped>
 .introduction {
-    padding: 80px 20px;
+    padding: 80px 20px 0px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;

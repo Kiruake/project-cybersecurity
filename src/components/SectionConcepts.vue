@@ -1,85 +1,44 @@
 <template>
     <section class="concepts-section">
-
         <h1 class="cards-title-concept">Avant de continuer, voici le minimum !</h1>
 
         <div class="concepts-container">
-            <!-- Concept 1 -->
-            <div class="concept-card">
-                <img src="https://images.unsplash.com/photo-1593642634367-d91a135587b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600"
-                    alt="Blue Team" class="concept-image" />
+            <div v-for="(concept, index) in concepts" :key="index" class="concept-card">
+                <img :src="concept.image" alt="Concept Image" class="concept-image" />
                 <div class="concept-details">
-                    <h3>Blue Team & Red Team</h3>
-                    <p>
-                        La Blue Team défend les systèmes contre les attaques de la Red Team,
-                        qui, quant à elle, cherche à identifier et exploiter les vulnérabilités.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Concept 2 -->
-            <div class="concept-card">
-                <img src="/images/hacking.jpg" alt="Hacking Éthique" class="concept-image" />
-                <div class="concept-details">
-                    <h3>Hacking Éthique</h3>
-                    <p>
-                        Il s'agit d'exploiter les failles de sécurité de manière légale pour
-                        améliorer la cybersécurité d'une organisation.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Concept 3 -->
-            <div class="concept-card">
-                <img src="/images/cryptographie.jpg" alt="Cryptographie" class="concept-image" />
-                <div class="concept-details">
-                    <h3>Cryptographie</h3>
-                    <p>
-                        La cryptographie est l'art de sécuriser les informations grâce à des
-                        techniques de codage pour garantir leur confidentialité.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Concept 4 -->
-            <div class="concept-card">
-                <img src="/images/report.png" alt="Gestion des Risques" class="concept-image" />
-                <div class="concept-details">
-                    <h3>Gestion des Risques</h3>
-                    <p>
-                        Identifier, évaluer et réduire les risques liés aux menaces
-                        potentielles pour sécuriser les systèmes d'information.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Concept 5 -->
-            <div class="concept-card">
-                <img src="/images/firewall.jpg" alt="Pare-feu" class="concept-image" />
-                <div class="concept-details">
-                    <h3>Pare-feu</h3>
-                    <p>
-                        Le pare-feu est un système qui filtre le trafic réseau pour empêcher
-                        l'accès non autorisé à un réseau ou à un appareil.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Concept 6 -->
-            <div class="concept-card">
-                <img src="/images/phishing.jpg" alt="Phishing" class="concept-image" />
-                <div class="concept-details">
-                    <h3>Phishing</h3>
-                    <p>
-                        Le phishing consiste à tromper les utilisateurs pour leur faire
-                        divulguer des informations sensibles, comme des mots de passe.
-                    </p>
+                    <h3>{{ concept.title }}</h3>
+                    <p>{{ concept.description }}</p>
                 </div>
             </div>
         </div>
     </section>
 </template>
 
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+import { supabase } from '../supabase'; // Assurez-vous que supabase est bien configuré
+import type { Concept } from '../types'; // Définir un type Concept
+
+const concepts = ref<Concept[]>([]); // Variable réactive pour stocker les concepts récupérés
+
+// Fonction pour récupérer les concepts depuis Supabase
+const fetchConcepts = async () => {
+    const { data, error } = await supabase
+        .from('concepts') // Nom de la table dans Supabase
+        .select('*'); // Sélectionner toutes les colonnes
+
+    if (error) {
+        console.error('Erreur lors de la récupération des concepts :', error);
+    } else {
+        concepts.value = data as Concept[]; // Caster les données pour correspondre au type Concept
+    }
+};
+
+// Appeler la fonction pour récupérer les concepts au montage du composant
+onMounted(() => {
+    fetchConcepts();
+});
+</script>
 
 <style scoped>
 .concepts-section {
@@ -94,7 +53,6 @@
     font-size: 32px;
     margin-bottom: 80px;
     font-family: "Orbitron", serif;
-
 }
 
 h2 {
@@ -124,14 +82,12 @@ h2 {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-
 .concept-image {
     width: 40%;
     height: 100%;
     object-fit: cover;
     border-radius: 12px 0 0 12px;
 }
-
 
 .concept-details {
     padding: 15px;

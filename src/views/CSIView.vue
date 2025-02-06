@@ -1,127 +1,226 @@
-// App.vue - Cyber Defense: Firewall Master (Version Avancée)
 <template>
-  <div class="game-container">
-    <h1>🛡️ Cyber Defense: Firewall Master</h1>
-    <h3>Protège ton réseau en bloquant les cyberattaques et en optimisant ta défense !</h3>
-
-    <div v-if="!gameOver">
-      <h4>📡 Logs réseau en temps réel :</h4>
-      <div class="log-container">
-        <div v-for="(log, index) in logs" :key="index" :class="['log-entry', log.type]">
-          <p><strong>IP:</strong> {{ log.ip }} - <strong>Requête:</strong> {{ log.request }}</p>
-          <button @click="handleAction(log, true)">✅ Autoriser</button>
-          <button @click="handleAction(log, false)">❌ Bloquer</button>
-        </div>
-      </div>
+  <div id="game-container">
+    <div v-if="gameOver" class="game-over">
+      <h2>Game Over!</h2>
+      <p>Score final: {{ score }}</p>
+      <button @click="restartGame">Recommencer</button>
     </div>
 
-    <div class="status">
-      <p>🔵 Score: {{ score }} | ❌ Erreurs: {{ mistakes }}/5</p>
-      <p>🛠️ Niveau de Sécurité: {{ securityLevel }}</p>
-      <progress :value="securityLevel" max="100"></progress>
-      <p v-if="gameOver" class="game-over">🚨 Réseau compromis ! Fin du jeu.</p>
-      <button v-if="gameOver" @click="restartGame">🔄 Recommencer</button>
+    <div v-if="!gameOver">
+      <h1>Cryptography Puzzle</h1>
+      <p>Indice: {{ currentHint }}</p>
+      <div>
+        <label for="password-input">Déchiffrez le message :</label>
+        <input v-model="inputMessage" type="text" id="password-input" placeholder="Entrez votre message décrypté" />
+        <button @click="checkMessage">Vérifier</button>
+      </div>
+      <p>Score: {{ score }}</p>
+      <p>Temps restant: {{ timeRemaining }} secondes</p>
+      <p v-if="feedbackMessage">{{ feedbackMessage }}</p>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
+<script lang="ts">
+import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
 
-const logs = ref([]);
-const score = ref(0);
-const mistakes = ref(0);
-const gameOver = ref(false);
-const securityLevel = ref(100);
+export default defineComponent({
+  name: 'CryptographyPuzzle',
+  setup() {
+    const score = ref(0);
+    const gameOver = ref(false);
+    const feedbackMessage = ref('');
+    const inputMessage = ref('');
+    const currentHint = ref('');
+    const timeRemaining = ref(30);
+    const timer = ref<number | null>(null);
 
-const attackPatterns = [
-  { ip: '192.168.1.45', request: 'GET /index.html', type: 'safe' },
-  { ip: '172.16.23.5', request: 'DROP TABLE users', type: 'attack' },
-  { ip: '203.0.113.10', request: 'alert(1)', type: 'attack' },
-  { ip: '185.42.102.8', request: 'POST /login.php', type: 'safe' },
-  { ip: '156.67.89.22', request: 'SELECT * FROM passwords', type: 'attack' }
-];
+    // Liste des puzzles cryptographiques avec un cryptage et un indice
+    const puzzles = [
+      { message: 'KHOOR', hint: 'César avec un décalage de 3' },
+      { message: 'Uifsf!', hint: 'César avec un décalage de 1' },
+      { message: '01010011 01110101 01101100', hint: 'XOR avec clé 5' },
+      { message: 'Y^O_Y@3e', hint: 'Substitution simple' },
+    ];
 
-const generateLog = () => {
-  if (gameOver.value) return;
-  const randomLog = attackPatterns[Math.floor(Math.random() * attackPatterns.length)];
-  logs.value.push(randomLog);
-  if (logs.value.length > 5) logs.value.shift();
-};
+    // Sélectionner un puzzle au hasard
+    let currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
 
-const handleAction = (log, allowed) => {
-  if (gameOver.value) return;
+    // Démarrer un nouveau jeu
+    const startGame = () => {
+      score.value = 0;
+      timeRemaining.value = 30;  // 30 secondes par niveau
+      feedbackMessage.value = '';
+      gameOver.value = false;
+      currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
+      currentHint.value = currentPuzzle.hint;
+      inputMessage.value = '';
 
-  if ((log.type === 'attack' && !allowed) || (log.type === 'safe' && allowed)) {
-    score.value++;
-    securityLevel.value = Math.min(100, securityLevel.value + 5);
-  } else {
-    mistakes.value++;
-    securityLevel.value -= 10;
-    if (mistakes.value >= 5) {
-      gameOver.value = true;
-    }
+      // Démarrer le chronomètre
+      if (timer.value) {
+        clearInterval(timer.value);
+      }
+
+      timer.value = setInterval(() => {
+        if (timeRemaining.value > 0) {
+          timeRemaining.value--;
+        } else {
+          gameOver.value = true;
+          clearInterval(timer.value!);
+        }
+      }, 1000);
+    };
+
+    // Fonction pour vérifier le message
+    const checkMessage = () => {
+      let decryptedMessage = '';
+      if (currentPuzzle.hint.includes('César')) {
+        decryptedMessage = caesarCipher(currentPuzzle.message, 3); // Décalage de 3 pour les exemples
+      } else if (currentPuzzle.hint.includes('XOR')) {
+        decryptedMessage = xorDecryption(currentPuzzle.message, 5); // XOR avec clé 5
+      } else {
+        decryptedMessage = substitutionCipher(currentPuzzle.message); // Substitution simple
+      }
+
+      if (inputMessage.value === decryptedMessage) {
+        feedbackMessage.value = 'Bravo! Message décrypté!';
+        score.value += 10;
+        setTimeout(startGame, 1000); // Nouveau puzzle
+      } else {
+        feedbackMessage.value = 'Mauvais message, essayez encore.';
+        score.value -= 5;
+      }
+    };
+
+    // Fonction de cryptage César
+    const caesarCipher = (message: string, shift: number): string => {
+      return message
+        .split('')
+        .map(char => {
+          if (char.match(/[a-zA-Z]/)) {
+            const code = char.charCodeAt(0);
+            const base = char.toLowerCase() === char ? 97 : 65;
+            return String.fromCharCode(((code - base + shift) % 26) + base);
+          }
+          return char;
+        })
+        .join('');
+    };
+
+    // Fonction de décryptage XOR
+    const xorDecryption = (message: string, key: number): string => {
+      return message
+        .split('')
+        .map(char => String.fromCharCode(char.charCodeAt(0) ^ key))
+        .join('');
+    };
+
+    // Fonction de substitution simple
+    const substitutionCipher = (message: string): string => {
+      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      const substitution = 'ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba';
+      return message
+        .split('')
+        .map(char => {
+          const index = alphabet.indexOf(char);
+          return index !== -1 ? substitution[index] : char;
+        })
+        .join('');
+    };
+
+    // Redémarrer le jeu
+    const restartGame = () => {
+      startGame();
+    };
+
+    // Démarrer le jeu au montage
+    onMounted(() => {
+      startGame();
+    });
+
+    // Nettoyer avant le démontage du composant
+    onBeforeUnmount(() => {
+      if (timer.value) {
+        clearInterval(timer.value);
+      }
+    });
+
+    return {
+      score,
+      gameOver,
+      feedbackMessage,
+      inputMessage,
+      currentHint,
+      timeRemaining,
+      checkMessage,
+      restartGame
+    };
   }
-};
-
-const restartGame = () => {
-  logs.value = [];
-  score.value = 0;
-  mistakes.value = 0;
-  gameOver.value = false;
-  securityLevel.value = 100;
-};
-
-onMounted(() => {
-  setInterval(generateLog, 2000);
 });
 </script>
 
-<style>
-.game-container {
+<style scoped>
+#game-container {
   text-align: center;
   padding: 20px;
 }
 
-.log-container {
-  margin-top: 20px;
+.game-over {
+  margin-top: 30px;
 }
 
-.log-entry {
+input {
+  margin: 10px;
   padding: 10px;
-  margin: 5px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.log-entry.attack {
-  background: #ffaaaa;
-}
-
-.log-entry.safe {
-  background: #aaffaa;
+  font-size: 16px;
+  width: 300px;
 }
 
 button {
-  margin-left: 10px;
-  padding: 5px 10px;
+  padding: 10px 20px;
+  background-color: #2f59f5;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.status {
-  margin-top: 20px;
-  font-size: 1.2em;
+button:hover {
+  background-color: #1c44b5;
 }
 
-.game-over {
+p {
+  font-size: 18px;
+  color: #333;
+}
+
+h1 {
+  font-size: 24px;
+  color: #080e24;
+}
+
+h2 {
+  font-size: 28px;
   color: red;
+}
+
+button {
+  margin-top: 20px;
+}
+
+input {
+  margin-bottom: 10px;
+}
+
+p {
   font-weight: bold;
 }
 
-progress {
-  width: 100%;
-  height: 20px;
+.game-over button {
+  background-color: #ff6347;
+}
+
+.game-over button:hover {
+  background-color: #ff4500;
 }
 </style>

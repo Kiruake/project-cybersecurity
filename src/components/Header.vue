@@ -63,7 +63,7 @@ const closeMenu = () => {
     top: 0;
     width: 100%;
     height: 80px;
-    z-index: 1000;
+    z-index: 2000;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -95,7 +95,7 @@ const closeMenu = () => {
 
 /* NAVIGATION */
 .header__nav {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -121,8 +121,13 @@ const closeMenu = () => {
     margin: 0;
     display: flex;
     font-family: "Orbitron", serif;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
+    /* Alignement horizontal sur desktop */
+    gap: 2rem;
+    justify-content: flex-end;
+    /* Alignement à droite */
+    width: 100%;
+    /* Assurez-vous que les éléments prennent toute la largeur */
 }
 
 /* Liens */
@@ -184,6 +189,8 @@ const closeMenu = () => {
     .header__list {
         flex-direction: row;
         gap: 2rem;
+        justify-content: flex-end;
+        /* Items alignés à droite */
     }
 
     .header__toggle {

@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import QuizzListView from '../views/QuizzListView.vue'
-import QuizzSingleView from '../views/QuizzSingleView.vue'
-import ChallengeView from '../views/ChallengeView.vue'
-import TerminalView from '../views/TerminalView.vue'
-import CSIView from '../views/CSIView.vue'
-import SingleCoursView from '../views/SingleCoursView.vue';
+import QuizzListView from '../views/Quizz/QuizzListView.vue'
+import QuizzSingleView from '../views/Quizz/QuizzSingleView.vue'
+import ChallengeView from '../views/Challenge/ChallengeView.vue'
+import CSIView from '@/views/CSIView.vue'
+import SingleCoursView from '../views/Cours/SingleCoursView.vue';
+import EcolesView from '../views/Ecoles/EcolesView.vue';
+import SingleEcoleView from '@/views/Ecoles/SingleEcoleView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,24 +17,23 @@ const router = createRouter({
       component: HomeView,
     },
 
-    { path: "/quizz", 
-      name: "quizz-list", 
-      component: QuizzListView 
+    {
+      path: '/quizz', 
+      name: 'quizz',
+      component: QuizzListView
     },
 
-    { path: "/quizz/:id",
-       name: "quizz-single",
-        component: QuizzSingleView, props: true 
-      },
-
+    {
+      path: '/quizz/:id', 
+      name: 'quizz-single',
+      component: QuizzSingleView,
+      props: true 
+    },
+    
+  
       { path: "/challenge", 
         name: "challenge", 
         component: ChallengeView 
-      },
-
-      { path: "/terminal", 
-        name: "terminal", 
-        component: TerminalView 
       },
 
       { path: "/csi", 
@@ -45,8 +45,20 @@ const router = createRouter({
         path: '/cours/:slug',
         name: 'course',
         component: SingleCoursView,
-        props: true  // Permet de passer les paramètres de route comme props dans le composant
-      }
+        props: true  
+      },
+      {
+        path: '/ecoles/:diplomeId', 
+        name: 'ecoles',
+        component: EcolesView, 
+        props: true 
+      },
+      {
+        path: '/ecole/:ecoleId', 
+        name: 'ecole',
+        component: SingleEcoleView, 
+        props: true 
+      },
 
 
   ],

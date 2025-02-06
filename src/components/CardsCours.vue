@@ -1,61 +1,47 @@
 <template>
     <section class="cards-container">
-        <div class="card" v-for="(card, index) in cards" :key="index">
+        <div class="card" v-for="(card, index) in cours" :key="index">
             <div class="icon-container">
-                <img :src="card.image" alt="Card Icon" class="card-icon" width="28" />
+                <img :src="card.icon" alt="Card Icon" class="card-icon" width="28" />
             </div>
             <div class="card-content">
                 <h3>{{ card.title }}</h3>
                 <p>{{ card.description }}</p>
-                <router-link :to="card.link" class="card-button">Voir le cours</router-link>
+                <router-link :to="`/cours/${card.slug}`" class="card-button">Voir le cours</router-link>
             </div>
         </div>
     </section>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue';
+import { supabase } from '../supabase';
+import type { Cours } from '../types';
 
-const cards = [
-    {
-        title: "Introduction à la Cybersécurité",
-        description: "Un cours essentiel pour débuter dans le domaine de la cybersécurité. Découvrez les bases, les menaces courantes et comment protéger les systèmes.",
-        image: `/icons/Cloud_Security.svg`,
-        link: "/cours/cybersecurite"
-    },
-    {
-        title: "Sécurisation des Réseaux",
-        description: "Apprenez à protéger un réseau informatique contre les attaques. De l'analyse des risques à la mise en place de mesures de sécurité.",
-        image: `/icons/Cluster.svg`,
-        link: "/cours/securisation-reseaux"
-    },
-    {
-        title: "Cryptographie des Données",
-        description: "Explorez les techniques de cryptage pour sécuriser les données. Un cours clé pour comprendre la confidentialité des informations.",
-        image: `/icons/Private_Key.svg`,
-        link: "/cours/cryptographie"
-    },
-    {
-        title: "Hacking Éthique",
-        description: "Devenez un hacker éthique et apprenez à tester et sécuriser les systèmes en toute légalité. Idéal pour les futurs experts en cybersécurité.",
-        image: `/icons/Service_Mesh.svg`,
-        link: "/cours/hacking-ethique"
-    },
-    {
-        title: "Gestion des Risques",
-        description: "Apprenez à évaluer et à gérer les risques en cybersécurité pour les entreprises, afin de minimiser les vulnérabilités.",
-        image: `/icons/Treat_Actor.svg`,
-        link: "/cours/gestion-risques"
-    },
-    {
-        title: "Sécurité des Applications Web",
-        description: "Protégez les applications web contre les attaques courantes comme le SQL injection, XSS et d'autres vulnérabilités web.",
-        image: `/icons/VM.svg`,
-        link: "/cours/securite-web"
-    },
-];
+// Définir une variable pour stocker les cours récupérés
+const cours = ref<Cours[]>([]);
+
+// Fonction pour récupérer les cours depuis Supabase
+const fetchCourses = async () => {
+    const { data, error } = await supabase
+        .from('cours') // Nom de la table dans Supabase
+        .select('*'); // Sélectionner toutes les colonnes
+
+    if (error) {
+        console.error('Erreur lors de la récupération des cours :', error);
+    } else {
+        cours.value = data as Cours[]; // Assurez-vous que les données correspondent au type Course
+    }
+};
+
+// Appeler la fonction au montage du composant pour récupérer les données
+onMounted(() => {
+    fetchCourses();
+});
 </script>
 
-<style>
+<style scoped>
+/* Vos styles restent inchangés */
 .cards-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -64,7 +50,6 @@ const cards = [
     padding-bottom: 0px;
     justify-items: center;
 }
-
 
 .card {
     position: relative;
@@ -82,12 +67,10 @@ const cards = [
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-
 .card:hover {
     transform: translateY(-10px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
-
 
 .icon-container {
     position: absolute;
@@ -107,7 +90,6 @@ const cards = [
     fill: #080e24;
 }
 
-
 .card-content {
     margin-top: 60px;
 }
@@ -125,7 +107,6 @@ const cards = [
     color: #333;
     line-height: 1.5;
 }
-
 
 .card-button {
     background-color: transparent;
@@ -147,7 +128,6 @@ const cards = [
     background-color: #080e24;
     color: white;
 }
-
 
 @media (max-width: 768px) {
     .cards-container {

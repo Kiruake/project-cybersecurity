@@ -24,8 +24,22 @@ font-family: "Orbitron", serif;
 color:#080e24;
 }
 
-p {
+p,
+ul,
+li {
   font-family: monospace;
 }
 
+strong {
+  color:#080e24;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul, li {
+  list-style: none;
+}
 

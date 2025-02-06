@@ -1,11 +1,13 @@
 <template>
     <main class="cards-container">
         <div class="card" v-for="(parcours, index) in parcoursList" :key="index">
+            <!-- Ajout d'un fond transparent sur l'image -->
+            <div class="image-overlay"></div>
             <img :src="parcours.image" :alt="parcours.title" />
             <div class="card-content">
                 <h2>{{ parcours.title }}</h2>
                 <p>{{ parcours.description }}</p>
-                <button @click="goTo(parcours.link)" class="button">
+                <button @click="goTo(parcours.id)" class="button">
                     En savoir plus
                 </button>
             </div>
@@ -14,35 +16,37 @@
 </template>
 
 <script setup lang="ts">
-// Liste des parcours
-const parcoursList = [
-    {
-        title: "BUT / BTS",
-        description:
-            "Découvre les écoles proposant des formations professionnalisantes pour te plonger dans les bases de la cybersécurité et des réseaux.",
-        image: "/images/Parcours1.jpg",
-        link: "https://example.com/but-bts",
-    },
-    {
-        title: "Licence",
-        description:
-            "Explore les universités et écoles proposant des licences en cybersécurité, mêlant théorie et pratique pour bâtir tes connaissances.",
-        image: "/images/Parcours2.jpg",
-        link: "https://example.com/licence",
-    },
-    {
-        title: "Master",
-        description:
-            "Accède aux écoles spécialisées pour des masters avancés en cybersécurité, conçus pour devenir expert et leader dans le domaine.",
-        image: "/images/Parcours3.jpg",
-        link: "https://example.com/master",
-    },
-];
+import { ref, onMounted } from 'vue';
+import { supabase } from '../supabase';
+import { useRouter } from 'vue-router';
+import type { Diplome } from '../types';
 
-// Fonction pour rediriger vers le lien
-const goTo = (link: string) => {
-    window.open(link, "_blank");
+const parcoursList = ref<Diplome[]>([]); // Variable pour stocker les diplômes
+
+const router = useRouter();
+
+// Fonction pour récupérer les diplômes depuis Supabase
+const fetchDiplomes = async () => {
+    const { data, error } = await supabase
+        .from('diplomes') // Table des diplômes
+        .select('*');
+
+    if (error) {
+        console.error('Erreur lors de la récupération des diplômes:', error);
+    } else {
+        parcoursList.value = data as Diplome[]; // Mettre à jour la liste avec les données récupérées
+    }
 };
+
+// Fonction pour rediriger vers la page des écoles d'un diplôme
+const goTo = (diplomeId: number) => {
+    router.push(`/ecoles/${diplomeId}`); // Rediriger vers la page des écoles liées à ce diplôme
+};
+
+// Appeler la fonction pour récupérer les diplômes lors du montage du composant
+onMounted(() => {
+    fetchDiplomes();
+});
 </script>
 
 <style scoped>
@@ -52,13 +56,13 @@ const goTo = (link: string) => {
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 80px 60px;
+    padding: 80px 70px;
     padding-bottom: 0px;
 }
 
 /* Styles des cartes */
 .card {
-    width: 24rem;
+    width: 26rem;
     height: 32rem;
     border-radius: 10px;
     overflow: hidden;
@@ -66,79 +70,104 @@ const goTo = (link: string) => {
     color: rgb(240, 240, 240);
     box-shadow: 0 8px 25px 4px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+}
 
-    img {
-        position: absolute;
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        opacity: 0.85;
-        transition: opacity 0.15s ease-out;
-    }
+/* Fond transparent ajouté sur l'image */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Ajustez cette valeur pour la teinte de l'overlay */
+    z-index: 1;
+}
 
-    h2 {
-        position: absolute;
-        inset: auto auto 30px 30px;
-        margin: 0;
-        color: #f5fcff;
-        transition: inset 0.2s 0.2s ease-out;
-        font-family: "Orbitron", serif;
-        font-weight: normal;
-        text-transform: uppercase;
-    }
+/* Image de la carte */
+.card img {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    transition: opacity 0.15s ease-out;
+    z-index: 0;
+}
 
-    p {
-        position: absolute;
-        color: #f5fcff;
-        opacity: 0;
-        max-width: 80%;
-        inset: auto auto 80px 30px;
-        transition: opacity 0.2s ease-out;
-    }
+/* Contenu de la carte */
+.card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    z-index: 2;
+}
 
-    button {
-        position: absolute;
-        inset: auto auto 40px 30px;
-        opacity: 0;
-        background-color: #080e24;
-        color: #f5fcff;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        font-size: 14px;
-        cursor: pointer;
-        transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+/* Titre de la carte */
+.card h2 {
+    position: absolute;
+    inset: auto auto 30px 30px;
+    margin: 0;
+    color: #f5fcff;
+    font-family: "Orbitron", serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    z-index: 2;
+}
 
-        span {
-            font-size: 1.2rem;
-        }
-    }
+/* Description de la carte */
+.card p {
+    position: absolute;
+    color: #f5fcff;
+    opacity: 0;
+    max-width: 80%;
+    inset: auto auto 80px 30px;
+    transition: opacity 0.2s ease-out;
+    z-index: 2;
+}
 
-    button:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-    }
+/* Bouton */
+.card button {
+    position: absolute;
+    inset: auto auto 40px 30px;
+    opacity: 0;
+    background-color: #080e24;
+    color: #f5fcff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    z-index: 2;
+}
 
-    &:hover h2 {
-        inset: auto auto 220px 30px;
-        transition: inset 0.2s ease-out;
-    }
+.card button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
 
-    &:hover p,
-    &:hover button {
-        opacity: 1;
-        transition: opacity 0.3s 0.1s ease-in;
-    }
+.card:hover h2 {
+    inset: auto auto 220px 30px;
+    transition: inset 0.2s ease-out;
+}
 
-    &:hover img {
-        transition: opacity 0.2s ease-in;
-        opacity: 1;
-    }
+.card:hover p,
+.card:hover button {
+    opacity: 1;
+    transition: opacity 0.3s 0.1s ease-in;
+}
+
+.card:hover img {
+    transition: opacity 0.2s ease-in;
+    opacity: 1;
 }
 </style>

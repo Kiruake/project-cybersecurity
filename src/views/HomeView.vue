@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import CardsCours from '@/components/CardsCours.vue';
 import CardsParcours from '@/components/CardsParcours.vue';
-import SectionConcepts from '../components/SectionConcepts.vue';
 import SectionIntroduction from '../components/SectionIntroduction.vue';
 import Header from "../components/Header.vue";
 </script>
@@ -26,13 +25,13 @@ import Header from "../components/Header.vue";
 
     <SectionIntroduction />
 
-    <SectionConcepts />
-
     <h1 class="cards-title">404 : Avenir non trouvé ? Voici les écoles pour y remédier</h1>
     <CardsParcours />
 
     <h1 class="cards-title">Nos ressources pour hackers en herbe et futurs experts</h1>
     <CardsCours />
+
+    <Offres />
 
 
   </main>
