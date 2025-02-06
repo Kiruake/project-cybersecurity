@@ -18,21 +18,14 @@ const closeMenu = () => {
         <div class="header__container">
             <!-- Logo -->
             <RouterLink to="/" class="header__logo-link" @click="closeMenu">
-                <h1 class="header__logo">Learn<span class="highlight">Hack</span></h1>
+                <h1 class="header__logo">Cyber<span class="highlight">Hub</span></h1>
             </RouterLink>
 
             <!-- Navigation Menu -->
             <nav class="header__nav" :class="{ 'header__nav--open': isMenuOpen }">
                 <ul class="header__list">
                     <li class="header__item">
-                        <RouterLink to="/" class="header__link" @click="closeMenu">Accueil</RouterLink>
-                    </li>
-                    <li class="header__item">
-                        <RouterLink to="/quizz" class="header__link" @click="closeMenu">Nos Mini-jeux</RouterLink>
-                    </li>
-                    <li class="header__item">
-                        <RouterLink to="/challenge" class="header__link" @click="closeMenu">Hacker Challenge
-                        </RouterLink>
+                        <RouterLink to="/quizz" class="header__link" @click="closeMenu">Quizz</RouterLink>
                     </li>
                 </ul>
             </nav>

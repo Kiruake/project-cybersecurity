@@ -3,7 +3,7 @@
         <div class="intro-container">
             <!-- Partie Texte -->
             <div class="intro-text">
-                <h1>Bienvenue sur Learn<span style="color: #2f59f5;">Hack</span></h1>
+                <h1>Bienvenue sur Cyber<span style="color: #2f59f5;">Hub</span></h1>
                 <p>
                     Tu t'intéresses à la cybersécurité mais tu ne sais pas par où commencer ?
                     Ce site est fait pour toi. Découvre des cours, des exercices, des concepts
@@ -19,7 +19,7 @@
 
             <!-- Partie Image principale -->
             <div class="intro-images">
-                <img src="/images/IntroImage.jpg" alt="Cyber Security Team" class="main-image" />
+                <img src="/images/SectionIntroImage.jpg" alt="Cyber Security Team" class="main-image" />
             </div>
         </div>
     </section>

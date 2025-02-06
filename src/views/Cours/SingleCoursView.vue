@@ -14,7 +14,8 @@
         <!-- Contenu détaillé du cours avec transitions -->
         <main v-if="cours && cours.content" class="course-content">
             <transition-group name="fade-slide" tag="div">
-                <section v-for="(section, index) in cours.content.sections" :key="index" class="course-section">
+                <section v-for="(section, index) in (cours.content as any).sections" :key="index"
+                    class="course-section">
                     <!-- Image de section (base) -->
                     <div v-if="section.image" class="section-image">
                         <img :src="section.image" alt="Illustration de la section" />

@@ -1,25 +1,34 @@
 <script setup lang="ts">
 import CardsCours from '@/components/CardsCours.vue';
 import CardsParcours from '@/components/CardsParcours.vue';
-import SectionIntroduction from '../components/SectionIntroduction.vue';
+import SectionIntroduction from '@/components/SectionIntroduction.vue';
 import Header from "../components/Header.vue";
 </script>
 
 <template>
   <main>
-    <!-- Section de la page d'accueil avec fond de couleur -->
     <Header />
     <section class="hero-section">
-      <div class="hero-left">
-        <h1 class="TitreAccueil">Learn<span style="color: #2f59f5;;">Hack</span></h1>
-        <h2 class="Slogan">Ta porte d'entrée dans le monde de la cybersécurité</h2>
-        <div class="ButtonGroup">
-          <button class="Button ButtonPrimary">Commencer</button>
-          <button class="Button ButtonOutline">En savoir plus</button>
+      <!-- Vidéo en fond -->
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="/videos/video-homepage2.mp4" type="video/mp4" />
+        Votre navigateur ne supporte pas la lecture de vidéos.
+      </video>
+
+      <!-- Contenu de la section héro -->
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 class="TitreAccueil">
+            Cyber<span style="color: #2f59f5;">Hub</span>
+          </h1>
+          <h2 class="Slogan">Ta porte d'entrée dans le monde de la cybersécurité</h2>
+          <div class="ButtonGroup">
+            <button class="Button ButtonPrimary">Commencer</button>
+            <button class="Button ButtonOutline">En savoir plus</button>
+          </div>
         </div>
-      </div>
-      <div class="hero-right">
-        <img src="/images/Hacker-amico.png" alt="Cybersecurity Image" class="hero-image" />
+        <div class="hero-right">
+        </div>
       </div>
     </section>
 
@@ -32,12 +41,11 @@ import Header from "../components/Header.vue";
     <CardsCours />
 
     <Offres />
-
-
   </main>
 </template>
 
 <style scoped>
+/* Réinitialisation globale */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -45,15 +53,41 @@ body {
   box-sizing: border-box;
 }
 
+/* Section héro */
 .hero-section {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+}
+
+/* Vidéo en fond */
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  opacity: 0.85;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  object-fit: cover;
+}
+
+/* Contenu de la section héro, positionné par-dessus la vidéo */
+.hero-content {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 600px;
-  background-color: #080e24;
+  width: 100%;
+  height: 100%;
   padding: 0 40px 0 60px;
 }
 
+/* Partie gauche du héros */
 .hero-left {
   max-width: 60%;
   color: #f5fcff;
@@ -77,14 +111,6 @@ body {
   margin-top: 40px;
 }
 
-.cards-title {
-  font-weight: bold;
-  margin-bottom: 0px;
-  margin-top: 80px;
-  font-family: "Orbitron", serif;
-  padding-left: 75px;
-}
-
 .Button {
   font-size: 16px;
   padding: 10px 20px;
@@ -102,7 +128,7 @@ body {
 }
 
 .ButtonPrimary:hover {
-  background-color: #2148d4
+  background-color: #2148d4;
 }
 
 .ButtonOutline {
@@ -116,6 +142,7 @@ body {
   color: #000;
 }
 
+/* Partie droite du héros */
 .hero-right {
   max-width: 40%;
 }
@@ -124,5 +151,14 @@ body {
   width: 90%;
   height: auto;
   object-fit: contain;
+}
+
+/* Titres des cartes */
+.cards-title {
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 80px;
+  font-family: "Orbitron", serif;
+  padding-left: 75px;
 }
 </style>
