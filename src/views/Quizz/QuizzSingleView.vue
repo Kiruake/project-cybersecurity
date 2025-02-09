@@ -30,6 +30,28 @@ const currentQuestion = computed(() => {
     return currentQuiz.value?.questions_quizz?.[currentQuestionIndex.value];
 });
 
+// Variable pour stocker les options mélangées
+const shuffledOptions = ref<string[]>([]);
+
+// Fonction de mélange (Fisher–Yates)
+function shuffleArray<T>(array: T[]): T[] {
+    const copy = array.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+// Lorsque la question change, on mélange les options
+watch(currentQuestion, (newQuestion) => {
+    if (newQuestion) {
+        shuffledOptions.value = shuffleArray(newQuestion.options);
+        // Redémarrer le timer pour la nouvelle question
+        startTimer();
+    }
+});
+
 // Chargement du quiz depuis Supabase
 const fetchQuiz = async () => {
     if (!quizId.value) {
@@ -53,7 +75,6 @@ watch(() => quizId.value, fetchQuiz, { immediate: true });
 
 // Démarre ou redémarre le timer pour une nouvelle question
 const startTimer = () => {
-    // Réinitialise la barre
     progress.value = 0;
     if (timerInterval) clearInterval(timerInterval);
     const step = 100 / (TIMER_DURATION / TIMER_UPDATE_INTERVAL);
@@ -64,7 +85,6 @@ const startTimer = () => {
             clearInterval(timerInterval as number);
             // Si l'utilisateur n'a pas répondu dans le temps, on considère la réponse comme fausse
             if (selectedOption.value === null) {
-                // On passe une chaîne vide (qui ne correspond normalement à aucune option)
                 checkAnswer("");
             }
         }
@@ -123,13 +143,6 @@ const quitQuiz = (): void => {
     }
 };
 
-// Démarre le timer dès qu'une nouvelle question est chargée
-watch(currentQuestion, (newVal) => {
-    if (newVal) {
-        startTimer();
-    }
-});
-
 // Pour nettoyer le timer lors de la destruction du composant
 onBeforeUnmount(() => {
     stopTimer();
@@ -172,11 +185,10 @@ onBeforeUnmount(() => {
 
             <!-- Grille des propositions en 2x2 -->
             <div class="options-grid">
-                <button v-for="(option, index) in currentQuestion?.options" :key="index" @click="checkAnswer(option)"
-                    :class="{
-                        correct: selectedOption !== null && option === currentQuestion.answer,
-                        wrong: selectedOption !== null && option === selectedOption && option !== currentQuestion.answer
-                    }">
+                <button v-for="(option, index) in shuffledOptions" :key="index" @click="checkAnswer(option)" :class="{
+                    correct: selectedOption !== null && option === currentQuestion.answer,
+                    wrong: selectedOption !== null && option === selectedOption && option !== currentQuestion.answer
+                }">
                     <div class="option-content">
                         <span class="option-letter">{{ optionLetters[index] }}</span>
                         <span class="option-text">{{ option }}</span>

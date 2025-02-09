@@ -82,7 +82,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-import { supabase } from "@/supabase";
+import { supabase } from "@/supabase.ts";
 import Header from "@/components/Header.vue";
 import type { Cours } from "@/types"; // Votre type doit inclure : slug, title, description, image, content, etc.
 

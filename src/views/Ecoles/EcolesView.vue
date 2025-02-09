@@ -9,12 +9,15 @@
                 style="display: flex; align-items: center; justify-content: center; height: 100%;">
                 <div class="intro-title" style="text-align: center; z-index: 1000;">
                     <h1 class="fadeInAnimation">
-                        {{ `Les écoles proposant ${diplomeId === '2' ? 'une' : 'un'} ${diplomaName} en lien avec la
+                        {{ `Liste des ${diplomaName} en lien avec la
                         cybersécurité` }}
                     </h1>
                     <p class="fadeInAnimation delay">
-                        Découvrez une sélection d'écoles en cybersécurité et plus encore, prêtes à vous former pour
-                        l'avenir numérique.
+                        Marre des tutos YouTube et des forums remplis d'"hackers auto-proclamés" ?
+                        Voici les écoles qui vont te donner un vrai diplôme et t’éviter de finir en *script kiddie*
+                        à vie.
+                        Cyberattaques, protection des données, hacking éthique…
+                        Choisis bien, car c'est peut-être ici que ton futur boss te repérera. 👀
                     </p>
                 </div>
             </div>
@@ -177,9 +180,10 @@ onMounted(() => {
 }
 
 .intro-title p {
-    font-size: 1.3rem;
+    font-size: 1rem;
     margin: 40px auto;
-    width: 70%;
+    line-height: 1.8;
+    width: 80%;
 }
 
 .button {

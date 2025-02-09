@@ -1,0 +1,218 @@
+<template>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <h1 class="footer-title1">
+                    Cyber<span style="color: #2f59f5;">Hub</span>
+                </h1>
+                <h2 class="footer-title">TOUT CE DONT TU AS BESOIN.</h2>
+                <p class="footer-description">
+                    Ta porte d'entrée dans le monde de la cybersécurité.
+                </p>
+                <a href="#" class="footer-button">Nous contacter</a>
+            </div>
+
+            <!-- Section Menu en 2 colonnes -->
+            <div class="footer-menu">
+                <div class="menu-columns">
+                    <div class="menu-column">
+                        <h3>Navigation</h3>
+                        <ul>
+                            <li><a href="#">Accueil</a></li>
+                            <li><a href="#">À propos</a></li>
+                            <li><a href="#">Nos cours</a></li>
+                            <li><a href="#">Parcours</a></li>
+                            <li><a href="#">Quizz</a></li>
+                        </ul>
+                    </div>
+                    <div class="menu-column">
+                        <h3>Ressources</h3>
+                        <ul>
+                            <li><a href="#">Événements</a></li>
+                            <li><a href="#">Ressources Externes</a></li>
+                            <li><a href="#">Perspectives de carrière</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Partenariats</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <ul>
+                <li><a href="#">Politique de confidentialité</a></li>
+                <li><a href="#">Mentions légales</a></li>
+            </ul>
+            <p>© 2025 Tout droits réservés - Cyber<span style="color: #2f59f5;">Hub</span></p>
+        </div>
+    </footer>
+</template>
+
+<style scoped>
+/* Footer principal */
+.footer {
+    background: #080e24;
+    color: #ffffff;
+    padding: 50px 20px;
+}
+
+/* Conteneur principal */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 150px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/* Partie gauche */
+.footer-left {
+    max-width: 500px;
+    flex: 1;
+}
+
+.footer-title1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.footer-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.footer-description {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: white;
+}
+
+/* Bouton "Nous contacter" */
+.footer-button {
+    display: inline-block;
+    background-color: #2f59f5;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.footer-button:hover {
+    background-color: #234ada;
+}
+
+/* Section Menu */
+.footer-menu {
+    flex: 1;
+    max-width: 600px;
+    margin-left: 50px;
+    /* Décalage vers la gauche */
+}
+
+/* Titre des colonnes */
+.footer-menu h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    color: #2f59f5;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Disposition en 2 colonnes */
+.menu-columns {
+    display: flex;
+    gap: 100px;
+}
+
+/* Chaque colonne */
+.menu-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-column li {
+    margin-bottom: 10px;
+}
+
+.menu-column a {
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.menu-column a:hover {
+    color: white;
+}
+
+/* Bas du footer */
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid white;
+}
+
+.footer-bottom ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.footer-bottom li {
+    margin: 5px 15px;
+}
+
+.footer-bottom a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-bottom a:hover {
+    color: white;
+}
+
+.footer-bottom p {
+    font-size: 0.9rem;
+    color: white;
+    margin-bottom: -10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-left {
+        max-width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .footer-menu {
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    .menu-columns {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>

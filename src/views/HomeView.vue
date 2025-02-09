@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import CardsCours from '@/components/CardsCours.vue';
 import CardsParcours from '@/components/CardsParcours.vue';
-import SectionIntroduction from '@/components/SectionIntroduction.vue';
+import SectionIntroduction from '../components/SectionIntroduction.vue';
+import OtherSectionsCards from '../components/OtherSectionsCards.vue';
 import Header from "../components/Header.vue";
+import ContactForm from "../components/ContactForm.vue";
 </script>
 
 <template>
@@ -34,13 +36,23 @@ import Header from "../components/Header.vue";
 
     <SectionIntroduction />
 
-    <h1 class="cards-title">404 : Avenir non trouvé ? Voici les écoles pour y remédier</h1>
-    <CardsParcours />
+    <!-- Section Parcours -->
+    <div id="cards-parcours">
+      <h1 class="cards-title">404 : Avenir non trouvé ? Voici les écoles pour y remédier</h1>
+      <CardsParcours />
+    </div>
 
-    <h1 class="cards-title">Nos ressources pour hackers en herbe et futurs experts</h1>
-    <CardsCours />
+    <!-- Section Cours -->
+    <div id="cards-cours">
+      <h1 class="cards-title">Nos ressources pour hackers en herbe et futurs experts</h1>
+      <CardsCours />
+    </div>
 
-    <Offres />
+    <h1 class="cards-title">En termes de contenus, tu risques pas de t'ennuyer ici..</h1>
+    <OtherSectionsCards />
+
+    <h1 class="cards-title">On sait que vous nous aimez bien, nous vous aimons aussi</h1>
+    <ContactForm />
   </main>
 </template>
 

@@ -128,6 +128,7 @@ onMounted(() => {
     inset: auto auto 80px 30px;
     transition: opacity 0.2s ease-out;
     z-index: 2;
+    line-height: 1.6;
 }
 
 /* Bouton */
@@ -143,6 +144,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Orbitron', serif;
     gap: 5px;
     font-size: 14px;
     cursor: pointer;

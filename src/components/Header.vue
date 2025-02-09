@@ -27,6 +27,30 @@ const closeMenu = () => {
                     <li class="header__item">
                         <RouterLink to="/quizz" class="header__link" @click="closeMenu">Quizz</RouterLink>
                     </li>
+                    <!-- Lien vers la section Nos Cours -->
+                    <li class="header__item">
+                        <RouterLink :to="{ path: '/', hash: '#cards-cours' }" class="header__link" @click="closeMenu">
+                            Nos Cours
+                        </RouterLink>
+                    </li>
+                    <!-- Lien vers la section Nos Parcours -->
+                    <li class="header__item">
+                        <RouterLink :to="{ path: '/', hash: '#cards-parcours' }" class="header__link"
+                            @click="closeMenu">
+                            Nos Parcours
+                        </RouterLink>
+                    </li>
+                    <li class="header__item">
+                        <RouterLink to="/events" class="header__link" @click="closeMenu">
+                            Événements
+                        </RouterLink>
+                    </li>
+
+                    <li class="header__item">
+                        <RouterLink to="/ressources" class="header__link" @click="closeMenu">
+                            Ressources
+                        </RouterLink>
+                    </li>
                 </ul>
             </nav>
 
