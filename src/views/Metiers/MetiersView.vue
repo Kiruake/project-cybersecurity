@@ -1,25 +1,48 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { supabase } from '@/supabase';
 import { useRouter } from 'vue-router';
 import Header from '@/components/Header.vue';
 import { CurrencyEuroIcon, AcademicCapIcon, BriefcaseIcon } from '@heroicons/vue/24/solid';
 
 const metiers = ref([]);
+const filteredMetiers = ref([]);
 const router = useRouter();
+
+// Filtres sélectionnés
+const selectedNiveau = ref(null);
+const selectedSalaireOrder = ref("asc");
 
 // Récupérer les métiers depuis Supabase
 const fetchMetiers = async () => {
-    const { data, error } = await supabase
-        .from('metiers')
-        .select('*');
+    const { data, error } = await supabase.from('metiers').select('*');
 
     if (error) {
         console.error("Erreur de récupération des métiers :", error);
     } else {
         metiers.value = data;
+        filteredMetiers.value = [...data]; // Copie initiale pour les filtres
     }
 };
+
+// Filtrer et trier les métiers
+const filterMetiers = () => {
+    let result = [...metiers.value];
+
+    if (selectedNiveau.value) {
+        result = result.filter(metier => metier.niveau_etude === selectedNiveau.value);
+    }
+
+    result.sort((a, b) => selectedSalaireOrder.value === "asc"
+        ? a.salaire_min - b.salaire_min
+        : b.salaire_min - a.salaire_min
+    );
+
+    filteredMetiers.value = result;
+};
+
+// Appliquer le filtrage au changement des filtres
+watch([selectedNiveau, selectedSalaireOrder], filterMetiers);
 
 // Rediriger vers la fiche du métier
 const goToMetier = (id) => {
@@ -33,9 +56,9 @@ onMounted(fetchMetiers);
     <Header />
 
     <!-- Parallax d’introduction -->
-    <section class="introduction">
-        <div class="parallax">
-            <div class="intro-content">
+    <section class="introduction-metier">
+        <div class="parallax-metier">
+            <div class="intro-content-metier">
                 <h1 class="fadeInAnimation">Les métiers de la cybersécurité</h1>
                 <p class="fadeInAnimation delay">
                     Hackers éthiques, experts en sécurité, analystes SOC... La cyber te tend les bras !
@@ -45,16 +68,35 @@ onMounted(fetchMetiers);
         </div>
     </section>
 
+    <!-- Filtres -->
+    <section class="filters">
+        <div class="filter-group">
+            <label for="niveau">Niveau d'étude :</label>
+            <select id="niveau" v-model="selectedNiveau">
+                <option value="">Tous</option>
+                <option value="BAC">BAC</option>
+                <option value="BAC +3">BAC +3</option>
+                <option value="BAC +5">BAC +5</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="salaire">Salaire minimum</label>
+            <select id="salaire" v-model="selectedSalaireOrder">
+                <option value="asc">Croissant</option>
+                <option value="desc">Décroissant</option>
+            </select>
+        </div>
+    </section>
+
     <!-- Grid des métiers -->
     <section class="metiers-section">
-        <div class="metiers-container">
-            <div v-for="metier in metiers" :key="metier.id" class="metier-card">
+        <div v-if="filteredMetiers.length > 0" class="metiers-container">
+            <div v-for="metier in filteredMetiers" :key="metier.id" class="metier-card">
                 <div class="metier-image-wrapper">
-                    <!-- Overlay -->
                     <div class="metier-image-overlay"></div>
                     <img :src="metier.image" class="metier-image" />
 
-                    <!-- Nom du métier -->
                     <div class="metier-image-info">
                         <h3 class="metier-title">{{ metier.name }}</h3>
                     </div>
@@ -66,7 +108,7 @@ onMounted(fetchMetiers);
                     <div class="metier-details">
                         <span class="tag">
                             <CurrencyEuroIcon class="icon-tag" />
-                            {{ metier.salaire }}k /an
+                            {{ metier.salaire_min }} - {{ metier.salaire_max }}k /an
                         </span>
                         <span class="tag">
                             <AcademicCapIcon class="icon-tag" />
@@ -82,12 +124,13 @@ onMounted(fetchMetiers);
                 </div>
             </div>
         </div>
+
     </section>
 </template>
 
 <style scoped>
 /* ========== Section d'Introduction ========== */
-.introduction {
+.introduction-metier {
     position: relative;
     height: 500px;
     color: white;
@@ -98,18 +141,18 @@ onMounted(fetchMetiers);
     background-size: cover;
 }
 
-.parallax {
+.parallax-metier {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/metiers/background-metiers.jpg') no-repeat center center;
+    background: url('/metiers/ImageMetiers.jpg') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
 }
 
-.parallax::after {
+.parallax-metier::after {
     content: "";
     position: absolute;
     top: 0;
@@ -119,13 +162,13 @@ onMounted(fetchMetiers);
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.intro-content {
+.intro-content-metier {
     text-align: center;
     z-index: 2;
     position: relative;
 }
 
-.intro-content h1 {
+.intro-content-metier h1 {
     font-size: 2.5rem;
     font-weight: bold;
     color: #f5fcff;
@@ -133,7 +176,7 @@ onMounted(fetchMetiers);
     margin: auto;
 }
 
-.intro-content p {
+.intro-content-metier p {
     font-size: 1rem;
     margin: 40px auto;
     line-height: 1.8;
@@ -143,6 +186,7 @@ onMounted(fetchMetiers);
 /* ========== Section des Métiers ========== */
 .metiers-section {
     padding: 80px 20px;
+    padding-top: 30px;
     background-color: #f9f9f9;
     font-family: "Roboto", sans-serif;
 }
@@ -249,10 +293,10 @@ onMounted(fetchMetiers);
 
 /* Bouton */
 .button-metier {
-    background-color: #080e24;
+    background-color: transparent;
     width: 100%;
-    color: #f5fcff;
-    border: none;
+    color: #080e24;
+    border: 1px solid #080e24;
     border-radius: 5px;
     padding: 10px 15px;
     font-size: 14px;
@@ -261,8 +305,9 @@ onMounted(fetchMetiers);
 }
 
 .button-metier:hover {
-    background-color: #1c44b5;
-    transform: translateY(-5px);
+    background-color: #080e24;
+    color: #f5fcff;
+    border: none;
 }
 
 /* ========== Responsive ========== */
@@ -277,6 +322,66 @@ onMounted(fetchMetiers);
 
     .intro-content p {
         font-size: 0.9rem;
+    }
+}
+
+.filters {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    padding: 30px;
+    border-radius: 6px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    font-weight: bold;
+    color: #080e24;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 10px;
+}
+
+.filter-group select {
+    padding: 10px;
+    width: 200px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.filter-group select:focus {
+    border-color: #080e24;
+}
+
+.no-results img {
+    width: 300px;
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+    display: block;
+    margin-bottom: 80px;
+}
+
+.no-results p {
+    text-align: center;
+    font-size: 1.4rem;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-group {
+        width: 80%;
     }
 }
 </style>

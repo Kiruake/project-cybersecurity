@@ -37,8 +37,8 @@ onMounted(fetchMetier);
     <div v-if="metier" class="metier-container">
         <!-- Image en Parallaxe avec le titre du métier -->
         <div class="metier-banner">
-            <div class="parallax" :style="{ backgroundImage: `url('${metier.image}')` }"></div>
-            <h1 class="metier-title">{{ metier.nom }}</h1>
+            <div class="parallax-metier" :style="{ backgroundImage: `url('${metier.image}')` }"></div>
+            <h1 class="metier-title">{{ metier.name }}</h1>
             <!-- Bouton Retour en haut à gauche -->
             <button class="back-button" @click="goBack">
                 <ArrowLeftIcon class="icon-back" /> Retour
@@ -90,11 +90,11 @@ onMounted(fetchMetier);
 /* Image en bannière avec effet parallaxe */
 .metier-banner {
     position: relative;
-    height: 350px;
+    height: 400px;
     overflow: hidden;
 }
 
-.parallax {
+.parallax-metier {
     position: absolute;
     top: 0;
     left: 0;
@@ -155,9 +155,8 @@ onMounted(fetchMetier);
     display: flex;
     justify-content: space-around;
     background: #080e24;
-    padding: 15px;
     border-radius: 8px;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     margin-bottom: 60px;
     text-align: left;
 }
@@ -168,7 +167,7 @@ onMounted(fetchMetier);
     align-items: center;
     gap: 10px;
     color: white;
-    padding: 10px 20px;
+    padding: 5px 20px;
 }
 
 /* Ajout d'une séparation verticale entre chaque élément */

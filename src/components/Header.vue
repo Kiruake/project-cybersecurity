@@ -51,6 +51,12 @@ const closeMenu = () => {
                             Ressources
                         </RouterLink>
                     </li>
+
+                    <li class="header__item">
+                        <RouterLink to="/metiers" class="header__link" @click="closeMenu">
+                            Métiers
+                        </RouterLink>
+                    </li>
                 </ul>
             </nav>
 

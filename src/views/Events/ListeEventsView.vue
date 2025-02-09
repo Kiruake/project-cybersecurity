@@ -28,7 +28,7 @@ onMounted(fetchEvents);
 
     <section class="introduction-event">
         <!-- On lie dynamiquement le style de la div parallax -->
-        <div class="parallax">
+        <div class="parallax-event">
             <div class="intro-content"
                 style="display: flex; align-items: center; justify-content: center; height: 100%;">
                 <div class="intro-title" style="text-align: center; z-index: 1000;">
@@ -99,7 +99,7 @@ onMounted(fetchEvents);
 }
 
 /* Effet de Parallaxe */
-.parallax {
+.parallax-event {
     position: absolute;
     top: 0;
     left: 0;
@@ -110,7 +110,7 @@ onMounted(fetchEvents);
     background-size: cover;
 }
 
-.parallax::after {
+.parallax-event::after {
     content: "";
     position: absolute;
     top: 0;

@@ -1,16 +1,92 @@
+<script setup lang="ts">
+import { ref, onMounted, computed, watch } from "vue";
+import { useRoute } from "vue-router";
+import { supabase } from "../../supabase";
+import type { Ecole } from "../../types";
+import Header from "../../components/Header.vue";
+
+const ecolesList = ref<Ecole[]>([]);
+const filteredEcoles = ref<Ecole[]>([]);
+const villesDisponibles = ref<string[]>([]);
+const route = useRoute();
+const diplomeId = route.params.diplomeId;
+const diplomaName = ref<string | null>(null);
+const stats = ref<any[]>([]);
+
+// Filtres sélectionnés
+const selectedDiplome = ref<string | null>(null);
+const selectedVille = ref<string | null>(null);
+const selectedType = ref<string | null>(null);
+
+const backgroundImage = computed(() => {
+    switch (diplomeId) {
+        case "1": return "/ecoles/ImageEcoles3.jpg";
+        case "2": return "/ecoles/ImageEcoles2.jpg";
+        case "3": return "/ecoles/ImageEcoles.jpg";
+        default: return "/ecoles/ImageEcoles.jpg";
+    }
+});
+
+// Récupération des données depuis Supabase
+const fetchDiplomaAndSchoolsAndStats = async () => {
+    const { data: diplomaData } = await supabase
+        .from("diplomes")
+        .select("title, stats")
+        .eq("id", diplomeId)
+        .single();
+
+    if (diplomaData) {
+        diplomaName.value = diplomaData.title || "Inconnu";
+        stats.value = diplomaData.stats || [];
+    }
+
+    const { data: schoolsData } = await supabase
+        .from("ecoles")
+        .select("*")
+        .eq("diplome_id", diplomeId);
+
+    if (schoolsData) {
+        // Traitement des diplômes NULL => BAC
+        ecolesList.value = schoolsData.map(ecole => ({
+            ...ecole,
+            diplome_requis: ecole.diplome_requis === null ? "BAC" : `BAC +${ecole.diplome_requis}`
+        }));
+
+        filteredEcoles.value = ecolesList.value;
+
+        // Extraire les villes uniques
+        villesDisponibles.value = [...new Set(schoolsData.map(ecole => ecole.ville))].sort();
+    }
+};
+
+// Fonction de filtrage dynamique
+const filterEcoles = () => {
+    filteredEcoles.value = ecolesList.value.filter(ecole => {
+        const matchDiplome = selectedDiplome.value ? ecole.diplome_requis === selectedDiplome.value : true;
+        const matchVille = selectedVille.value ? ecole.ville === selectedVille.value : true;
+        const matchType = selectedType.value ? ecole.type === selectedType.value : true;
+        return matchDiplome && matchVille && matchType;
+    });
+};
+
+// Appliquer le filtrage lorsque les filtres changent
+watch([selectedDiplome, selectedVille, selectedType], filterEcoles);
+
+onMounted(fetchDiplomaAndSchoolsAndStats);
+</script>
+
 <template>
     <Header />
 
-    <!-- Introduction avec Parallax et Animation de Texte -->
     <section class="introduction">
         <!-- On lie dynamiquement le style de la div parallax -->
-        <div class="parallax" :style="{ backgroundImage: `url('${backgroundImage}')` }">
+        <div class="parallax" :style="{ backgroundImage: `url(${backgroundImage})` }">
             <div class="intro-content"
                 style="display: flex; align-items: center; justify-content: center; height: 100%;">
                 <div class="intro-title" style="text-align: center; z-index: 1000;">
                     <h1 class="fadeInAnimation">
-                        {{ `Liste des ${diplomaName} en lien avec la
-                        cybersécurité` }}
+                        Liste des {{ diplomaName }} en lien avec la
+                        cybersécurité
                     </h1>
                     <p class="fadeInAnimation delay">
                         Marre des tutos YouTube et des forums remplis d'"hackers auto-proclamés" ?
@@ -24,14 +100,43 @@
         </div>
     </section>
 
+
+    <!-- Section Filtres -->
+    <section class="filters">
+        <div class="filter-group">
+            <label for="diplome">Diplôme requis</label>
+            <select id="diplome" v-model="selectedDiplome">
+                <option value="">Tous</option>
+                <option value="BAC">BAC</option>
+                <option value="BAC +3">BAC +3</option>
+                <option value="BAC +2">BAC +2</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="ville">Ville</label>
+            <select id="ville" v-model="selectedVille">
+                <option value="">Toutes</option>
+                <option v-for="ville in villesDisponibles" :key="ville" :value="ville">{{ ville }}</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="type">Type d'école</label>
+            <select id="type" v-model="selectedType">
+                <option value="">Tous</option>
+                <option value="Public">Public</option>
+                <option value="Privé">Privé</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- Affichage des écoles -->
     <section id="ecoles-section" class="ecoles-section">
-        <div class="ecoles-container">
-            <div v-for="(ecole, index) in ecolesList" :key="index" class="ecole-card">
+        <div v-if="filteredEcoles.length > 0" class="ecoles-container">
+            <div v-for="(ecole, index) in filteredEcoles" :key="index" class="ecole-card">
                 <div class="ecole-image-wrapper">
-                    <!-- Tag indiquant le type de l'école positionné en haut à gauche -->
-                    <div class="type-tag tag">
-                        {{ ecole.type }}
-                    </div>
+                    <div class="type-tag tag">{{ ecole.type }}</div>
                     <div class="ecole-image-overlay"></div>
                     <img :src="ecole.image" alt="Image de l'école" class="ecole-image" />
                     <div class="ecole-image-info">
@@ -54,7 +159,7 @@
                         </span>
                         <span class="tag">
                             <img class="icon-tag" src="/icons/IconDiplome.svg" alt="Diplome" />
-                            BAC{{ ecole.diplome_requis ? ' +' + ecole.diplome_requis : '' }}
+                            {{ ecole.diplome_requis ? `${ecole.diplome_requis}` : 'BAC' }}
                         </span>
                     </div>
 
@@ -62,70 +167,14 @@
                 </div>
             </div>
         </div>
+
+        <!-- Message lorsqu'aucune école ne correspond aux filtres -->
+        <div v-else class="no-results">
+            <p>Aucune école ne correspond à vos critères... Essayez d'autres filtres !</p>
+            <img src="/images/search.png" alt="Aucune école trouvée" class="no-results-img">
+        </div>
     </section>
 </template>
-
-<script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
-import { useRoute } from "vue-router";
-import { supabase } from "../../supabase";
-import type { Ecole } from "../../types";
-import Header from "../../components/Header.vue";
-
-const ecolesList = ref<Ecole[]>([]);
-const route = useRoute();
-const diplomeId = route.params.diplomeId; // Récupérer l'id du diplôme depuis l'URL
-const diplomaName = ref<string | null>(null);
-const stats = ref<any[]>([]);
-
-// Propriété calculée pour définir l'image de fond en fonction de l'id du diplôme
-const backgroundImage = computed(() => {
-    // Exemple : adapter ces cas selon vos IDs et chemins d'images
-    switch (diplomeId) {
-        case "1":
-            return "/ecoles/ImageEcoles3.jpg";
-        case "2":
-            return "/ecoles/ImageEcoles2.jpg";
-        case "3":
-            return "/ecoles/ImageEcoles.jpg";
-        default:
-            return "/ecoles/ImageEcoles.jpg"; // Image par défaut
-    }
-});
-
-// Fonction pour récupérer les données du diplôme, des écoles et des statistiques
-const fetchDiplomaAndSchoolsAndStats = async () => {
-    // Récupérer les détails du diplôme
-    const { data: diplomaData, error: diplomaError } = await supabase
-        .from("diplomes")
-        .select("title, stats")
-        .eq("id", diplomeId)
-        .single();
-
-    if (diplomaError) {
-        console.error("Erreur lors de la récupération du diplôme:", diplomaError);
-    } else {
-        diplomaName.value = diplomaData?.title || "Inconnu";
-        stats.value = diplomaData?.stats || [];
-    }
-
-    // Récupérer les écoles liées au diplôme
-    const { data: schoolsData, error: schoolsError } = await supabase
-        .from("ecoles")
-        .select("*")
-        .eq("diplome_id", diplomeId);
-
-    if (schoolsError) {
-        console.error("Erreur lors de la récupération des écoles:", schoolsError);
-    } else {
-        ecolesList.value = schoolsData as Ecole[];
-    }
-};
-
-onMounted(() => {
-    fetchDiplomaAndSchoolsAndStats();
-});
-</script>
 
 <style scoped>
 /* Style global de la section d'introduction */
@@ -160,14 +209,13 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
-    z-index: 1;
 }
 
 /* Texte central de l'introduction */
 .intro-content {
     text-align: center;
     z-index: 2;
-    font-family: 'Roboto', sans-serif;
+    position: relative;
 }
 
 .intro-title h1 {
@@ -272,6 +320,7 @@ onMounted(() => {
 /* Section des écoles */
 .ecoles-section {
     padding: 80px 20px;
+    padding-top: 30px;
     background-color: #f9f9f9;
     font-family: "Roboto", sans-serif;
 }
@@ -385,5 +434,65 @@ onMounted(() => {
 .icon-tag {
     width: 20px;
     margin-right: 6px;
+}
+
+.filters {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    padding: 30px;
+    border-radius: 6px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    font-weight: bold;
+    color: #080e24;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 10px;
+}
+
+.filter-group select {
+    padding: 10px;
+    width: 200px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.filter-group select:focus {
+    border-color: #080e24;
+}
+
+.no-results img {
+    width: 300px;
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+    display: block;
+    margin-bottom: 80px;
+}
+
+.no-results p {
+    text-align: center;
+    font-size: 1.4rem;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-group {
+        width: 80%;
+    }
 }
 </style>
