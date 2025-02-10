@@ -9,7 +9,9 @@
                 <p class="footer-description">
                     Ta porte d'entrée dans le monde de la cybersécurité.
                 </p>
-                <a href="#" class="footer-button">Nous contacter</a>
+                <RouterLink :to="{ path: '/', hash: '#cards-contact' }">
+                    <a class="footer-button">Nous contacter</a>
+                </RouterLink>
             </div>
 
             <!-- Section Menu en 2 colonnes -->
@@ -18,21 +20,45 @@
                     <div class="menu-column">
                         <h3>Navigation</h3>
                         <ul>
-                            <li><a href="#">Accueil</a></li>
-                            <li><a href="#">À propos</a></li>
-                            <li><a href="#">Nos cours</a></li>
-                            <li><a href="#">Parcours</a></li>
-                            <li><a href="#">Quizz</a></li>
+                            <RouterLink to="/">
+                                <li>Accueil</li>
+                            </RouterLink>
+
+                            <RouterLink to="/metiers">
+                                <li>Les métiers</li>
+                            </RouterLink>
+
+                            <RouterLink to="/events">
+                                <li>Événements</li>
+                            </RouterLink>
+
+                            <RouterLink :to="{ path: '/', hash: '#cards-parcours' }">
+                                <li>Écoles en cyber</li>
+                            </RouterLink>
+
+
+
                         </ul>
                     </div>
                     <div class="menu-column">
                         <h3>Ressources</h3>
                         <ul>
-                            <li><a href="#">Événements</a></li>
-                            <li><a href="#">Ressources Externes</a></li>
-                            <li><a href="#">Perspectives de carrière</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Partenariats</a></li>
+
+                            <RouterLink :to="{ path: '/', hash: '#cards-cours' }">
+                                <li>Nos cours</li>
+                            </RouterLink>
+
+                            <RouterLink to="/ressources">
+                                <li>Ressources Externes</li>
+                            </RouterLink>
+
+                            <RouterLink to="/quizz">
+                                <li>Quiz</li>
+                            </RouterLink>
+
+                            <RouterLink to="/about">
+                                <li>À propos</li>
+                            </RouterLink>
                         </ul>
                     </div>
                 </div>
@@ -41,8 +67,13 @@
 
         <div class="footer-bottom">
             <ul>
-                <li><a href="#">Politique de confidentialité</a></li>
-                <li><a href="#">Mentions légales</a></li>
+                <RouterLink to="/pl">
+                    <li>Politique de confidentialité</li>
+                </RouterLink>
+
+                <RouterLink to="/ml">
+                    <li>Mentions légales</li>
+                </RouterLink>
             </ul>
             <p>© 2025 Tout droits réservés - Cyber<span style="color: #2f59f5;">Hub</span></p>
         </div>
@@ -140,9 +171,6 @@
     padding: 0;
 }
 
-.menu-column li {
-    margin-bottom: 10px;
-}
 
 .menu-column a {
     color: white;

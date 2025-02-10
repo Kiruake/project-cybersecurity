@@ -10,6 +10,9 @@ import ListeEventsView from '@/views/Events/ListeEventsView.vue'
 import ListeRessourcesView from '@/views/Ressources/ListeRessourcesView.vue'
 import MetierDetails from '@/views/Metiers/MetierDetails.vue'
 import MetiersView from '@/views/Metiers/MetiersView.vue'
+import AboutView from '../views/About/AboutView.vue'
+import MLView from '@/views/ML/MLView.vue'
+import PLView from '@/views/PL/PLView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -73,7 +76,23 @@ const router = createRouter({
       name: 'MetierDetail',
       component: MetierDetails,
       props: true
-  }
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: AboutView
+  },
+  {
+    path: '/ml',
+    name: 'ml',
+    component: MLView
+  },
+  {
+    path: '/pl',
+    name: 'pl',
+    component: PLView
+  },
+
   ],
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {

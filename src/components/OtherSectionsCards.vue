@@ -7,21 +7,21 @@ const router = useRouter();
 const cards = [
     {
         id: 1,
-        title: "Événements",
+        title: "Événements en 2025",
         description: "Reste informé des prochains événements en cybersécurité et participe aux conférences, CTFs et meetups.",
         icon: "/icons/event.png",
         route: "/events"
     },
     {
         id: 2,
-        title: "Métiers",
+        title: "Perspectives de carrière",
         description: "Découvre les métiers de la cybersécurité et trouve celui qui te correspond pour une future carrière.",
         icon: "/icons/teamwork.png",
         route: "/metiers"
     },
     {
         id: 3,
-        title: "Quiz",
+        title: "Quiz - Teste ton niveau !",
         description: "Teste tes connaissances en cybersécurité avec nos quiz interactifs et améliore tes compétences.",
         icon: "/icons/quiz.png",
         route: "/quizz"

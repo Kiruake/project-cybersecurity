@@ -25,7 +25,7 @@ const closeMenu = () => {
             <nav class="header__nav" :class="{ 'header__nav--open': isMenuOpen }">
                 <ul class="header__list">
                     <li class="header__item">
-                        <RouterLink to="/quizz" class="header__link" @click="closeMenu">Quizz</RouterLink>
+                        <RouterLink to="/quizz" class="header__link" @click="closeMenu">Quiz</RouterLink>
                     </li>
                     <!-- Lien vers la section Nos Cours -->
                     <li class="header__item">

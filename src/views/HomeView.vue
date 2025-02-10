@@ -13,7 +13,7 @@ import ContactForm from "../components/ContactForm.vue";
     <section class="hero-section">
       <!-- Vidéo en fond -->
       <video class="hero-video" autoplay muted loop playsinline>
-        <source src="/videos/video-homepage2.mp4" type="video/mp4" />
+        <source src="/videos/video-homepage2-2.mp4" type="video/mp4" />
         Votre navigateur ne supporte pas la lecture de vidéos.
       </video>
 
@@ -25,8 +25,15 @@ import ContactForm from "../components/ContactForm.vue";
           </h1>
           <h2 class="Slogan">Ta porte d'entrée dans le monde de la cybersécurité</h2>
           <div class="ButtonGroup">
-            <button class="Button ButtonPrimary">Commencer</button>
-            <button class="Button ButtonOutline">En savoir plus</button>
+
+            <RouterLink :to="{ path: '/', hash: '#cards-contact' }">
+              <button class="Button ButtonPrimary">Nous Contacter</button>
+            </RouterLink>
+
+            <RouterLink to="/about">
+              <button class="Button ButtonOutline">En savoir plus</button>
+            </RouterLink>
+
           </div>
         </div>
         <div class="hero-right">
@@ -48,11 +55,14 @@ import ContactForm from "../components/ContactForm.vue";
       <CardsCours />
     </div>
 
-    <h1 class="cards-title">En termes de contenus, tu risques pas de t'ennuyer ici..</h1>
+    <h1 class="cards-title">En termes de contenus, tu ne risques pas de t'ennuyer ici..</h1>
     <OtherSectionsCards />
 
-    <h1 class="cards-title">On sait que vous nous aimez bien, nous vous aimons aussi</h1>
-    <ContactForm />
+    <div id="cards-contact">
+      <h1 class="cards-title">On sait que vous nous aimez bien, parlez nous !</h1>
+      <ContactForm />
+    </div>
+
   </main>
 </template>
 
@@ -124,9 +134,11 @@ body {
 }
 
 .Button {
-  font-size: 16px;
+  font-size: 14px;
   padding: 10px 20px;
+  height: 40px;
   border-radius: 5px;
+  font-family: 'Orbitron', serif;
   cursor: pointer;
   text-transform: uppercase;
   font-weight: bold;

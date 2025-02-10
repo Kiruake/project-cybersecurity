@@ -139,6 +139,7 @@ onMounted(() => {
     background-color: #080e24;
     color: #f5fcff;
     border: none;
+    text-transform: uppercase;
     border-radius: 5px;
     padding: 10px 15px;
     display: flex;
@@ -146,15 +147,14 @@ onMounted(() => {
     justify-content: center;
     font-family: 'Orbitron', serif;
     gap: 5px;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
     z-index: 2;
 }
 
 .card button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+    background-color: #08133a;
 }
 
 .card:hover h2 {

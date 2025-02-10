@@ -73,6 +73,9 @@ const fetchQuiz = async () => {
 
 watch(() => quizId.value, fetchQuiz, { immediate: true });
 
+const userResponses = ref<{ question: string; correctAnswer: string; userAnswer: string | null }[]>([]);
+
+
 // Démarre ou redémarre le timer pour une nouvelle question
 const startTimer = () => {
     progress.value = 0;
@@ -104,7 +107,17 @@ const checkAnswer = (option: string): void => {
     if (selectedOption.value !== null) return; // Empêche la réponse multiple
     selectedOption.value = option;
     stopTimer();
-    if (option === currentQuestion.value?.answer) {
+
+    const correctAnswer = currentQuestion.value?.answer || "";
+    const userAnswer = option;
+
+    userResponses.value.push({
+        question: currentQuestion.value?.question || "Question inconnue",
+        correctAnswer,
+        userAnswer
+    });
+
+    if (option === correctAnswer) {
         isCorrect.value = true;
         feedbackMessage.value = "Bonne réponse ! 🎉";
         score.value++;
@@ -113,6 +126,7 @@ const checkAnswer = (option: string): void => {
         feedbackMessage.value = "Mauvaise réponse 😕";
     }
 };
+
 
 // Passage à la question suivante
 const nextQuestion = (): void => {
@@ -202,9 +216,9 @@ onBeforeUnmount(() => {
             </div>
         </div>
 
-        <!-- Affichage du score en fin de quiz -->
         <ScoreComponent v-if="isQuizFinished" :score="score" :totalQuestions="currentQuiz.questions_quizz.length"
-            @restart="restartQuiz" />
+            :questions="userResponses" @restart="restartQuiz" />
+
     </div>
 </template>
 

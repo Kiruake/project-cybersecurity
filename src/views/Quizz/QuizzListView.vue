@@ -38,7 +38,7 @@ onMounted(() => {
     <Header />
     <div class="quizz-page">
         <div class="quizz-image-section">
-            <h1 class="title">📚 Sélectionne un quizz</h1>
+            <h1 class="title">📚 Sélectionne un quiz</h1>
             <img src="/quizz/QuizzShow.png" alt="Illustration Quizz" class="quizz-cover">
             <p class="quizz-description">Plongez dans l'univers de la cybersécurité et améliorez vos compétences grâce à
                 nos quiz interactifs ! 🚀</p>

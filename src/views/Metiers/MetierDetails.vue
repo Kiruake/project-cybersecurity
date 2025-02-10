@@ -205,6 +205,7 @@ onMounted(fetchMetier);
 .competence-list {
     font-size: 1rem;
     margin-bottom: 20px;
+    line-height: 1.8;
 }
 
 /* Bouton fiche ROM */

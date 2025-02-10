@@ -256,6 +256,7 @@ onMounted(() => {
 
 .section-paragraphs p {
     margin-bottom: 20px;
+    font-size: 16px;
 }
 
 .section-definitions,
