@@ -76,6 +76,7 @@ const submitForm = () => {
     padding: 50px 20px;
     align-items: center;
     gap: 60px;
+    margin-bottom: 100px;
 }
 
 .contact-form {
