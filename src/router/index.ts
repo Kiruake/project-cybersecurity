@@ -9,7 +9,7 @@ import ListeEventsView from '@/views/Events/ListeEventsView.vue'
 import ListeRessourcesView from '@/views/Ressources/ListeRessourcesView.vue'
 import MetierDetails from '@/views/Metiers/MetierDetails.vue'
 import MetiersView from '@/views/Metiers/MetiersView.vue'
-import AboutView from '../views/About/AboutView.vue'
+import AboutView from '@/views/About/AboutView.vue'
 import MLView from '@/views/ML/MLView.vue'
 import PLView from '@/views/PL/PLView.vue'
 

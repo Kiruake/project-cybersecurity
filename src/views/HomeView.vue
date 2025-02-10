@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import CardsCours from '@/components/CardsCours.vue';
 import CardsParcours from '@/components/CardsParcours.vue';
-import SectionIntroduction from '../components/SectionIntroduction.vue';
-import OtherSectionsCards from '../components/OtherSectionsCards.vue';
+import SectionIntroduction from '../components/SectionIntroduction/SectionIntroduction.vue';
+import OtherSectionsCards from '@/components/OtherSectionsCards/OtherSectionsCards.vue';
 import Header from "../components/Header.vue";
-import ContactForm from "../components/ContactForm.vue";
+import ContactForm from "../components/ContactForm/ContactForm.vue";
 </script>
 
 <template>
