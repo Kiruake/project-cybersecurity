@@ -172,4 +172,103 @@ onMounted(() => {
     transition: opacity 0.2s ease-in;
     opacity: 1;
 }
+
+/* === Responsive Design === */
+
+/* 🖥️ Desktop Large (≥1024px) */
+@media (max-width: 1200px) {
+    .cards-container {
+        padding: 60px 40px;
+    }
+
+    .card {
+        width: 24rem;
+        height: 30rem;
+    }
+}
+
+/* 📱 Tablette (768px - 1023px) */
+@media (max-width: 1023px) {
+    .cards-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 50px 30px;
+        padding-bottom: 0px;
+    }
+
+    .card {
+        width: 22rem;
+        height: 30rem;
+    }
+
+    .card h2 {
+        font-size: 1.4rem;
+    }
+
+    .card p {
+        font-size: 1rem;
+    }
+
+    .card button {
+        font-size: 11px;
+        padding: 8px 12px;
+    }
+}
+
+/* 📱 Mobile (≤768px) */
+@media (max-width: 795px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 60px 25px;
+        gap: 40px;
+        padding-bottom: 0px;
+    }
+
+    .card {
+        width: 90%;
+        height: 300px;
+    }
+
+    .card h2 {
+        font-size: 1.3rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+
+    .card button {
+        font-size: 10px;
+        padding: 7px 10px;
+    }
+}
+
+/* 📱 Petit Mobile (≤480px) */
+@media (max-width: 480px) {
+    .cards-container {
+        padding: 30px 25px;
+        padding-bottom: 0px;
+        gap: 30px;
+    }
+
+    .card {
+        width: 100%;
+        height: 300px;
+    }
+
+    .card h2 {
+        font-size: 1.2rem;
+    }
+
+    .card p {
+        font-size: 0.85rem;
+    }
+
+    .card button {
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+}
 </style>

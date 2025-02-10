@@ -468,4 +468,14 @@ onBeforeUnmount(() => {
 .next-btn:hover {
     background: #0056b3;
 }
+
+@media (max-width: 768px) {
+    .option-text {
+        font-size: 12px;
+    }
+
+    .options-grid button {
+        padding: 6px;
+    }
+}
 </style>

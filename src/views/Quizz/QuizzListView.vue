@@ -161,4 +161,101 @@ onMounted(() => {
     font-size: 14px;
     color: #666;
 }
+
+/* === Responsive Design === */
+
+/* 📌 Pour tablettes et petits écrans */
+@media (max-width: 1024px) {
+    .quizz-page {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+        margin-bottom: 100px;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .quizz-image-section {
+        width: 100%;
+        padding: 40px 20px;
+    }
+
+    .quizz-cover {
+        max-width: 80%;
+        margin-top: -10;
+    }
+
+    .quizz-description {
+        font-size: 18px;
+    }
+
+    .quizz-list-container {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .quizz-list {
+        max-height: none;
+        padding-right: 0;
+    }
+
+    .quizz-card {
+        padding: 12px;
+        width: 90%;
+    }
+
+    .quizz-info h2 {
+        font-size: 16px;
+    }
+
+    .quizz-info p {
+        font-size: 12px;
+    }
+}
+
+/* 📌 Pour smartphones */
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.7rem;
+    }
+
+    .quizz-image-section {
+        padding: 30px 15px;
+    }
+
+    .quizz-cover {
+        max-width: 90%;
+    }
+
+    .quizz-description {
+        font-size: 13px;
+    }
+
+    .quizz-list-container {
+        padding: 15px;
+    }
+
+    .quizz-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .quizz-icon {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+    }
+
+    .quizz-info h2 {
+        font-size: 14px;
+    }
+
+    .quizz-info p {
+        font-size: 12px;
+    }
+}
+
 </style>

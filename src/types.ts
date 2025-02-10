@@ -34,6 +34,7 @@ export interface Ecole {
     parcours:string[];
     ville:string;
     lieu:string;
+    link:string;
     type:string;
     diplome_requis: number;
     prix: number;

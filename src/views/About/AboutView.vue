@@ -25,7 +25,7 @@ const features = [
                 en cybersécurité. 🚀
             </p>
             <p class="about-highlight">
-                Que tu sois débutant ou expert, nous avons rassemblé **les meilleures ressources, écoles et opportunités
+                Que tu sois débutant ou expert, nous avons rassemblé les meilleures ressources, écoles et opportunités
                 professionnelles pour t'accompagner.
             </p>
             <RouterLink to="/" class="about-link">
@@ -191,6 +191,10 @@ const features = [
 
     .features-container {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .features-section {
+        margin-top: 0px;
     }
 }
 

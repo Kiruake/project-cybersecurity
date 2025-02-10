@@ -341,22 +341,203 @@ onMounted(fetchPlaylists);
     color: white;
 }
 
-/* Responsive */
+/* 📱 Tablette (768px - 1024px) */
+@media (max-width: 1024px) {
+
+    /* Réduction du padding et de la largeur du contenu */
+    .container-ressources {
+        padding: 50px 10px;
+    }
+
+    /* Grille des playlists : 2 par ligne */
+    .playlists-grid {
+        gap: 40px;
+        row-gap: 40px;
+    }
+
+    .playlist-card {
+        padding: 12px;
+    }
+
+    .playlist-thumbnail {
+        width: 250px;
+        height: 250px;
+    }
+
+    .playlist-title {
+        font-size: 1.1rem;
+    }
+
+    .playlist-description {
+        font-size: 0.9rem;
+    }
+
+    /* Modale de la playlist */
+    .playlist-modal {
+        max-width: 90%;
+        width: 900px;
+        padding: 15px;
+    }
+
+    /* Lecture vidéo */
+    .video-section iframe {
+        width: 100%;
+        height: 400px;
+    }
+
+    /* Sidebar des vidéos */
+    .playlist-sidebar {
+        padding: 10px;
+    }
+
+    .playlist-sidebar li {
+        padding: 8px;
+    }
+
+    .video-thumbnail {
+        width: 50px;
+    }
+}
+
+/* 📱 Mobile (≤768px) */
 @media (max-width: 768px) {
+
+    /* Listes en colonne */
+    .playlists-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+    }
+
+    .playlist-intro {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .playlist-intro h2 {
+        font-size: 1.6rem;
+    }
+
+    .playlist-card {
+        width: 100%;
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    .playlist-thumbnail {
+        width: 100%;
+        height: 220px;
+    }
+
+    .playlist-title {
+        font-size: 1rem;
+    }
+
+    .playlist-count {
+        font-size: 0.9rem;
+    }
+
+    /* Modale responsive */
+    .playlist-modal {
+        width: 95%;
+        padding: 10px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .section-title {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .section-title2 {
+        font-size: 3rem;
+        margin-top: -1rem;
+        margin-bottom: 10px;
+    }
+
+    /* Contenu de la modale en colonne */
     .playlist-view {
         flex-direction: column;
+        gap: 15px;
     }
 
-    .playlist-modal {
-        width: 90%;
-    }
-
-    .video-section {
+    /* Lecture vidéo 100% */
+    .video-section iframe {
         width: 100%;
+        height: 300px;
     }
 
+    /* Sidebar en pleine largeur */
     .playlist-sidebar {
-        width: 100%;
+        width: 95%;
+        padding: 10px;
     }
+
+    .playlist-sidebar ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .playlist-sidebar li {
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+        padding: 8px;
+    }
+
+    /* Bouton de fermeture plus accessible */
+    .close-button {
+        top: 10px;
+        right: 10px;
+        font-size: 1.5rem;
+    }
+}
+
+/* 📱 Petit Mobile (≤480px) */
+@media (max-width: 480px) {
+    .playlist-intro h2 {
+        font-size: 1.5rem;
+    }
+
+    .playlist-intro p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .playlist-card {
+        width: 90%;
+        padding: 10px;
+    }
+
+    .playlist-title {
+        font-size: 0.95rem;
+    }
+
+    /* Lecture vidéo */
+    .video-section iframe {
+        height: 250px;
+    }
+
+    /* Ajustement du texte */
+    .video-title {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 460px) {
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .section-title2 {
+        font-size: 2rem;
+        margin-top: -1rem;
+        margin-bottom: 10px;
+    }
+
 }
 </style>

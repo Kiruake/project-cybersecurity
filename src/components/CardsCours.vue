@@ -55,7 +55,7 @@ onMounted(() => {
     position: relative;
     width: 80%;
     max-width: 350px;
-    height: 300px;
+    height: auto;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -106,6 +106,7 @@ onMounted(() => {
     font-size: 14px;
     color: #333;
     line-height: 1.5;
+    margin-bottom: 30px;
 }
 
 .card-button {
@@ -120,8 +121,6 @@ onMounted(() => {
     transition: background-color 0.3s ease;
     margin-top: 15px;
     font-family: "Orbitron", serif;
-    position: relative;
-    bottom: -40px;
 }
 
 .card-button:hover {
@@ -129,15 +128,116 @@ onMounted(() => {
     color: white;
 }
 
-@media (max-width: 768px) {
+/* === Responsive Design === */
+
+/* 📱 Tablette (768px - 1023px) */
+@media (max-width: 1023px) {
     .cards-container {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 50px;
+        padding-bottom: 0px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 280px;
+        height: 280px;
+        padding: 15px;
+        bottom: 0;
+    }
+
+    .card-content h3 {
+        font-size: 16px;
+    }
+
+    .card-content p {
+        font-size: 13px;
+    }
+
+    .card-button {
+        font-size: 11px;
+        padding: 8px 15px;
+    }
+
+    .icon-container {
+        width: 40px;
+        height: 40px;
+    }
+
+    .card-icon {
+        width: 22px;
     }
 }
 
-@media (max-width: 480px) {
+/* 📱 Mobile (≤768px) */
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 40px 30px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 260px;
+        height: auto;
+        padding: 15px;
+    }
+
+    .card-content h3 {
+        font-size: 15px;
+    }
+
+    .card-content p {
+        font-size: 12px;
+    }
+
+    .card-button {
+        font-size: 10px;
+        padding: 7px 12px;
+    }
+}
+
+/* 📱 Petit Mobile (≤480px) */
+@media (max-width: 670px) {
     .cards-container {
         grid-template-columns: 1fr;
+        padding: 60px 15px;
+        padding-bottom: 0px;
+        gap: 40px;
+    }
+
+    .card {
+        width: 100%;
+        height: auto;
+        max-width: 90%;
+    }
+
+    .card-content h3 {
+        font-size: 16px;
+    }
+
+    .card-content {
+        margin-top: 40px;
+    }
+
+    .card-content p {
+        font-size: 12px;
+    }
+
+    .card-button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .icon-container {
+        width: 35px;
+        height: 35px;
+    }
+
+    .card-icon {
+        width: 20px;
     }
 }
 </style>

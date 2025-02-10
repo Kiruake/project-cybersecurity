@@ -3,7 +3,7 @@
         <div class="intro-container">
             <!-- Partie Texte -->
             <div class="intro-text">
-                <h1>Bienvenue sur Cyber<span style="color: #2f59f5;">Hub</span></h1>
+                <h1>Bienvenue sur Cyber<span class="highlight">Hub</span></h1>
                 <p>
                     Tu t'intéresses à la cybersécurité mais tu ne sais pas par où commencer ?
                     Ce site est fait pour toi. Découvre des cours, des exercices, des concepts
@@ -14,7 +14,6 @@
                     métiers qui t'intéressent, tu es au bon endroit. Ensemble, on prépare
                     ton avenir dans un domaine en plein essor !
                 </p>
-
             </div>
 
             <!-- Partie Image principale -->
@@ -29,6 +28,7 @@
 </script>
 
 <style scoped>
+/* === Conteneur général === */
 .introduction {
     padding: 80px 20px 0px 20px;
     display: flex;
@@ -39,7 +39,7 @@
     margin: 0 auto;
 }
 
-
+/* === Conteneur principal === */
 .intro-container {
     display: flex;
     justify-content: space-between;
@@ -48,7 +48,7 @@
     width: 100%;
 }
 
-
+/* === Partie Texte === */
 .intro-text {
     flex: 1;
     max-width: 600px;
@@ -57,11 +57,11 @@
 .intro-text h1 {
     font-size: 2.8rem;
     color: #080e24;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
-.intro-text h1 span {
-    color: #0077ff;
+.highlight {
+    color: #2f59f5;
 }
 
 .intro-text p {
@@ -72,12 +72,7 @@
     color: #333;
 }
 
-.intro-text p:first-of-type {
-    margin-top: 0;
-}
-
-
-
+/* === Partie Image === */
 .intro-images {
     flex: 1;
     display: flex;
@@ -87,11 +82,77 @@
 
 .intro-images .main-image {
     width: 80%;
-    margin-left: 40px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     opacity: 0.85;
     transition: opacity 0.15s ease-out;
     height: 450px;
     object-fit: cover;
+}
+
+/* === Responsive Design === */
+@media (max-width: 1024px) {
+    .intro-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .intro-text {
+        max-width: 90%;
+        text-align: start;
+    }
+
+    .intro-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .intro-text p {
+        font-size: 1rem;
+    }
+
+    .intro-images .main-image {
+        width: 90%;
+        height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .introduction {
+        padding: 40px 20px 0px 20px;
+    }
+
+
+    .intro-text h1 {
+        font-size: 2.2rem;
+    }
+
+    .intro-text p {
+        font-size: 0.95rem;
+    }
+
+    .intro-images .main-image {
+        width: 100%;
+        height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro-text h1 {
+        font-size: 2rem;
+    }
+
+    .intro-container {
+        gap:30px;
+    }
+
+    .intro-text p {
+        font-size: 0.9rem;
+    }
+
+    .intro-images .main-image {
+        width: 90%;
+        height: 300px;
+    }
 }
 </style>

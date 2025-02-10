@@ -62,7 +62,7 @@ const fetchDiplomaAndSchoolsAndStats = async () => {
 // Fonction de filtrage dynamique
 const filterEcoles = () => {
     filteredEcoles.value = ecolesList.value.filter(ecole => {
-        const matchDiplome = selectedDiplome.value ? ecole.diplome_requis === selectedDiplome.value : true;
+        const matchDiplome = selectedDiplome.value ? ecole.diplome_requis.toString() === selectedDiplome.value : true;
         const matchVille = selectedVille.value ? ecole.ville === selectedVille.value : true;
         const matchType = selectedType.value ? ecole.type === selectedType.value : true;
         return matchDiplome && matchVille && matchType;
@@ -90,10 +90,10 @@ onMounted(fetchDiplomaAndSchoolsAndStats);
                     </h1>
                     <p class="fadeInAnimation delay">
                         Marre des tutos YouTube et des forums remplis d'"hackers auto-proclamés" ?
-                        Voici les écoles qui vont te donner un vrai diplôme et t’éviter de finir en *script kiddie*
+                        Voici les écoles qui vont te donner un vrai diplôme et t’éviter de finir en script kiddie
                         à vie.
                         Cyberattaques, protection des données, hacking éthique…
-                        Choisis bien, car c'est peut-être ici que ton futur boss te repérera. 👀
+                        Choisis bien, car c'est peut-être ici que ton futur boss te repérera 👀
                     </p>
                 </div>
             </div>
@@ -163,7 +163,7 @@ onMounted(fetchDiplomaAndSchoolsAndStats);
                         </span>
                     </div>
 
-                    <router-link :to="`/ecole/${ecole.id}`" class="button">Voir les détails</router-link>
+                    <a :href="ecole.link" target="_blank" rel="noopener noreferrer" class="button">Voir l'école</a>
                 </div>
             </div>
         </div>
@@ -232,6 +232,17 @@ onMounted(fetchDiplomaAndSchoolsAndStats);
     margin: 40px auto;
     line-height: 1.8;
     width: 80%;
+}
+
+@media (max-width: 768px) {
+    .intro-title h1 {
+        font-size: 2rem;
+    }
+
+    .intro-title p {
+        font-size: 0.9rem;
+        width: 90%;
+    }
 }
 
 .button {
@@ -349,7 +360,6 @@ onMounted(fetchDiplomaAndSchoolsAndStats);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    cursor: pointer;
     height: 100%;
 }
 
@@ -459,7 +469,7 @@ onMounted(fetchDiplomaAndSchoolsAndStats);
 .filter-group select {
     padding: 10px;
     width: 200px;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
     outline: none;
@@ -485,10 +495,9 @@ onMounted(fetchDiplomaAndSchoolsAndStats);
     margin-bottom: 80px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 725px) {
     .filters {
         flex-direction: column;
-        align-items: center;
     }
 
     .filter-group {

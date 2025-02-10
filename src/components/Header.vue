@@ -16,33 +16,50 @@ const closeMenu = () => {
 <template>
     <header class="header">
         <div class="header__container">
-            <!-- Logo -->
-            <RouterLink to="/" class="header__logo-link" @click="closeMenu">
+            <!-- Logo toujours visible -->
+            <RouterLink to="/" class="header__logo-link">
                 <h1 class="header__logo">Cyber<span class="highlight">Hub</span></h1>
             </RouterLink>
 
-            <!-- Navigation Menu -->
+            <!-- Menu Mobile - Bouton Hamburger -->
+            <button class="header__toggle" aria-label="Toggle Menu" @click="toggleMenu" v-if="!isMenuOpen">
+                <span class="header__toggle-bar"></span>
+                <span class="header__toggle-bar"></span>
+                <span class="header__toggle-bar"></span>
+            </button>
+
+            <!-- Menu -->
             <nav class="header__nav" :class="{ 'header__nav--open': isMenuOpen }">
+                <!-- Bouton Fermer (croix) visible seulement en mobile -->
+                <button class="header__close" @click="closeMenu" v-if="isMenuOpen">x</button>
+
                 <ul class="header__list">
                     <li class="header__item">
-                        <RouterLink to="/quizz" class="header__link" @click="closeMenu">Quiz</RouterLink>
+                        <RouterLink :to="{ path: '/', hash: '#cards-parcours' }" class="header__link"
+                            @click="closeMenu">
+                            Les Écoles
+                        </RouterLink>
                     </li>
-                    <!-- Lien vers la section Nos Cours -->
+
                     <li class="header__item">
                         <RouterLink :to="{ path: '/', hash: '#cards-cours' }" class="header__link" @click="closeMenu">
                             Nos Cours
                         </RouterLink>
                     </li>
-                    <!-- Lien vers la section Nos Parcours -->
+
                     <li class="header__item">
-                        <RouterLink :to="{ path: '/', hash: '#cards-parcours' }" class="header__link"
-                            @click="closeMenu">
-                            Nos Parcours
-                        </RouterLink>
+                        <RouterLink to="/quizz" class="header__link" @click="closeMenu">Quiz</RouterLink>
                     </li>
+
                     <li class="header__item">
                         <RouterLink to="/events" class="header__link" @click="closeMenu">
-                            Événements
+                            Événements 2025
+                        </RouterLink>
+                    </li>
+
+                    <li class="header__item">
+                        <RouterLink to="/metiers" class="header__link" @click="closeMenu">
+                            Les Métiers
                         </RouterLink>
                     </li>
 
@@ -51,21 +68,8 @@ const closeMenu = () => {
                             Ressources
                         </RouterLink>
                     </li>
-
-                    <li class="header__item">
-                        <RouterLink to="/metiers" class="header__link" @click="closeMenu">
-                            Métiers
-                        </RouterLink>
-                    </li>
                 </ul>
             </nav>
-
-            <!-- Menu Mobile - Bouton Hamburger -->
-            <button class="header__toggle" aria-label="Toggle Menu" @click="toggleMenu">
-                <span class="header__toggle-bar" :class="{ 'header__toggle-bar--active': isMenuOpen }"></span>
-                <span class="header__toggle-bar" :class="{ 'header__toggle-bar--active': isMenuOpen }"></span>
-                <span class="header__toggle-bar" :class="{ 'header__toggle-bar--active': isMenuOpen }"></span>
-            </button>
         </div>
     </header>
 </template>
@@ -118,23 +122,24 @@ const closeMenu = () => {
 
 /* NAVIGATION */
 .header__nav {
-    position: relative;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(8, 14, 36, 0.9);
+    background: rgba(8, 14, 36, 1);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    transform: translateY(-100%);
-    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    z-index: 1000;
 }
 
-/* Menu ouvert */
+/* Activation du menu */
 .header__nav--open {
-    transform: translateY(0);
+    transform: translateX(0);
 }
 
 /* Liste des liens */
@@ -144,20 +149,16 @@ const closeMenu = () => {
     margin: 0;
     display: flex;
     font-family: "Orbitron", serif;
-    flex-direction: row;
-    /* Alignement horizontal sur desktop */
+    flex-direction: column;
     gap: 2rem;
-    justify-content: flex-end;
-    /* Alignement à droite */
-    width: 100%;
-    /* Assurez-vous que les éléments prennent toute la largeur */
+    text-align: center;
 }
 
 /* Liens */
 .header__link {
     text-decoration: none;
     color: var(--text-light);
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 600;
     transition: color 0.3s ease;
 }
@@ -200,7 +201,19 @@ const closeMenu = () => {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* RESPONSIVE : Affichage du menu sur Desktop */
+/* BOUTON CROIX (FERMER LE MENU) */
+.header__close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* === Responsive Header === */
 @media screen and (min-width: 1024px) {
     .header__nav {
         position: static;
@@ -213,7 +226,6 @@ const closeMenu = () => {
         flex-direction: row;
         gap: 2rem;
         justify-content: flex-end;
-        /* Items alignés à droite */
     }
 
     .header__toggle {
@@ -222,6 +234,62 @@ const closeMenu = () => {
 
     .header__link {
         font-size: 1rem;
+    }
+}
+
+/* 📌 Version tablette et mobile */
+@media screen and (max-width: 1024px) {
+    .header__container {
+        padding: 0 15px;
+    }
+
+    .header__nav {
+        transform: translateX(100%);
+    }
+
+    /* Activation du menu */
+    .header__nav--open {
+        transform: translateX(0);
+    }
+
+    /* Liste des liens en colonne */
+    .header__list {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    /* Taille des liens */
+    .header__link {
+        font-size: 1.8rem;
+    }
+
+    /* Affichage du bouton hamburger */
+    .header__toggle {
+        display: flex;
+    }
+}
+
+/* 📌 Pour petits mobiles */
+@media screen and (max-width: 768px) {
+    .header__logo {
+        font-size: 22px;
+    }
+
+    .header__toggle {
+        width: 28px;
+        height: 22px;
+    }
+
+    .header__toggle-bar {
+        height: 2.5px;
+    }
+
+    .header__list {
+        gap: 2rem;
+    }
+
+    .header__link {
+        font-size: 1.5rem;
     }
 }
 </style>

@@ -169,13 +169,33 @@ const submitForm = () => {
 /* Responsive */
 @media (max-width: 900px) {
     .contact-container {
-        flex-direction: column;
+        flex-direction: column-reverse;
         text-align: center;
+        gap: 30px;
     }
 
     .contact-info {
         border-left: none;
         padding-left: 0;
+        margin-left: 5%;
+    }
+
+    .info-text {
+        text-align: start;
+    }
+
+    .info-title {
+        text-align: start;
+        font-size: 1.6rem;
+    }
+
+    .contact-form {
+        text-align: start;
+        width: 90%;
+    }
+
+    .form-title {
+        text-align: start;
     }
 }
 </style>

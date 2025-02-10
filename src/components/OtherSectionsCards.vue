@@ -63,6 +63,9 @@ const goToPage = (route) => {
     justify-content: center;
     gap: 30px;
     margin-top: 80px;
+    padding: 70px;
+    padding-top: 0px;
+
 }
 
 /* Style des cartes */
@@ -138,10 +141,98 @@ const goToPage = (route) => {
 }
 
 /* Responsive */
-@media (max-width: 900px) {
+/* 📱 Tablette (768px - 1023px) */
+@media (max-width: 1023px) {
+    .cards-container2 {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding-bottom: 0px;
+    }
+
+    .card2 {
+        width: 300px;
+        padding: 15px;
+    }
+
+    .card-icon2 {
+        width: 150px;
+        height: 150px;
+    }
+
+    .card-title2 {
+        font-size: 1.2rem;
+    }
+
+    .card-description2 {
+        font-size: 0.9rem;
+    }
+
+    .card-button2 {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}
+
+/* 📱 Mobile (≤768px) */
+@media (max-width: 768px) {
     .cards-container2 {
         flex-direction: column;
         align-items: center;
+        gap: 54px;
+        padding-bottom: 0px;
+    }
+
+    .card2 {
+        width: 100%;
+        max-width: 320px;
+        padding: 20px;
+    }
+
+    .card-icon2 {
+        width: 140px;
+        height: 140px;
+    }
+
+    .card-title2 {
+        font-size: 1.1rem;
+    }
+
+    .card-description2 {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .card-button2 {
+        font-size: 0.9rem;
+        padding: 7px 10px;
+    }
+}
+
+/* 📱 Petit Mobile (≤480px) */
+@media (max-width: 480px) {
+    .card2 {
+        width: 90%;
+        max-width: 300px;
+        padding: 15px;
+    }
+
+    .card-icon2 {
+        width: 120px;
+        height: 120px;
+    }
+
+    .card-title2 {
+        font-size: 1rem;
+    }
+
+    .card-description2 {
+        font-size: 0.85rem;
+    }
+
+    .card-button2 {
+        font-size: 0.85rem;
+        padding: 6px 10px;
     }
 }
 </style>

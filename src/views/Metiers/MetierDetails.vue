@@ -50,7 +50,8 @@ onMounted(fetchMetier);
             <div class="metier-summary">
                 <div class="info-card">
                     <CurrencyDollarIcon class="icon-info" />
-                    <p><strong class="salaire">Salaire :</strong> {{ metier.salaire }}k€ / an</p>
+                    <p><strong class="salaire">Salaire :</strong> {{ metier.salaire_min }}- {{ metier.salaire_max }}k€ /
+                        an</p>
                 </div>
                 <div class="info-card border-left">
                     <AcademicCapIcon class="icon-info" />
@@ -168,6 +169,10 @@ onMounted(fetchMetier);
     gap: 10px;
     color: white;
     padding: 5px 20px;
+}
+
+.info-card p {
+    line-height: 1.3;
 }
 
 /* Ajout d'une séparation verticale entre chaque élément */

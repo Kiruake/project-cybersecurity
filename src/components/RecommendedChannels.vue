@@ -102,4 +102,32 @@ onMounted(fetchChaines);
     text-align: center;
     font-family: 'Orbitron', sans-serif;
 }
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .section-title3 {
+        font-size: 3rem;
+        margin-top: -1rem;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 460px) {
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .section-title3 {
+        font-size: 2rem;
+        margin-top: -1rem;
+        margin-bottom: 10px;
+    }
+
+}
 </style>

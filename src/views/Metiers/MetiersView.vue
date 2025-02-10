@@ -55,23 +55,15 @@ onMounted(fetchMetiers);
 <template>
     <Header />
 
-    <!-- Parallax d’introduction -->
-    <section class="introduction-metier">
-        <div class="parallax-metier">
-            <div class="intro-content-metier">
-                <h1 class="fadeInAnimation">Les métiers de la cybersécurité</h1>
-                <p class="fadeInAnimation delay">
-                    Hackers éthiques, experts en sécurité, analystes SOC... La cyber te tend les bras !
-                    Voici les jobs qui recrutent (et qui payent bien 💸). À toi de choisir le tien ! 🚀
-                </p>
-            </div>
-        </div>
-    </section>
+    <div class="page-subtitle">
+        <h1 class="section-title">Perspectives <span style="color: white;">d'avenir</span></h1>
+        <h1 class="section-title2">Les métiers en <span style="color: #2f59f5;">cyber</span></h1>
+    </div>
 
     <!-- Filtres -->
     <section class="filters">
         <div class="filter-group">
-            <label for="niveau">Niveau d'étude :</label>
+            <label for="niveau">Niveau d'étude</label>
             <select id="niveau" v-model="selectedNiveau">
                 <option value="">Tous</option>
                 <option value="BAC">BAC</option>
@@ -141,14 +133,93 @@ onMounted(fetchMetiers);
     background-size: cover;
 }
 
+.page-subtitle {
+    background-color: #080e24;
+}
+
+/* Titre de la page */
+.section-title {
+    font-size: 5rem;
+    text-align: start;
+    margin-left: 20px;
+    color: #2f59f5;
+    margin-top: 0px;
+    padding-top: 80px;
+}
+
+.section-title2 {
+    font-size: 5rem;
+    text-align: start;
+    margin-left: 20px;
+    margin-top: -5rem;
+    padding-bottom: 80px;
+    color: white;
+}
+
+.page-subtitle {
+    font-size: 1.2rem;
+    color: #b0b0b0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 995px) {
+
+    .section-title {
+        font-size: 4rem;
+        color: #2f59f5;
+        margin-bottom: 0px;
+
+    }
+
+    .section-title2 {
+        font-size: 4rem;
+        margin-top: 10px;
+
+    }
+}
+
+@media (max-width: 790px) {
+
+    .section-title {
+        font-size: 3rem;
+        color: #2f59f5;
+        margin-bottom: 0px;
+
+    }
+
+    .section-title2 {
+        font-size: 3rem;
+        margin-top: 10px;
+
+    }
+}
+
+@media (max-width: 620px) {
+
+    .section-title {
+        font-size: 2.5rem;
+        color: #2f59f5;
+        margin-bottom: 0px;
+
+    }
+
+    .section-title2 {
+        font-size: 2.5rem;
+        margin-top: 10px;
+
+    }
+}
+
+
 .parallax-metier {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/metiers/ImageMetiers.jpg') no-repeat center center;
     background-size: cover;
+    background: url('/metiers/ImageMetiers.jpg');
     background-attachment: fixed;
 }
 
@@ -207,7 +278,6 @@ onMounted(fetchMetiers);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    cursor: pointer;
     transition: transform 0.3s ease-in-out;
     height: 100%;
 }
@@ -310,17 +380,19 @@ onMounted(fetchMetiers);
     border: none;
 }
 
+
+
 /* ========== Responsive ========== */
 @media (max-width: 768px) {
     .metiers-container {
         grid-template-columns: 1fr;
     }
 
-    .intro-content h1 {
+    .intro-content-metier h1 {
         font-size: 2rem;
     }
 
-    .intro-content p {
+    .intro-content-metier p {
         font-size: 0.9rem;
     }
 }
@@ -348,7 +420,7 @@ onMounted(fetchMetiers);
 .filter-group select {
     padding: 10px;
     width: 200px;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;
     outline: none;
@@ -374,14 +446,23 @@ onMounted(fetchMetiers);
     margin-bottom: 80px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 725px) {
     .filters {
         flex-direction: column;
-        align-items: center;
     }
 
     .filter-group {
         width: 80%;
+    }
+
+    .intro-title h1 {
+        font-size: 1.8rem;
+        width: 95%;
+    }
+
+    .intro-title p {
+        font-size: 0.9rem;
+        width: 95%;
     }
 }
 </style>

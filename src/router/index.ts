@@ -5,7 +5,6 @@ import QuizzSingleView from '../views/Quizz/QuizzSingleView.vue'
 import ChallengeView from '../views/Challenge/ChallengeView.vue'
 import SingleCoursView from '../views/Cours/SingleCoursView.vue'
 import EcolesView from '../views/Ecoles/EcolesView.vue'
-import SingleEcoleView from '@/views/Ecoles/SingleEcoleView.vue'
 import ListeEventsView from '@/views/Events/ListeEventsView.vue'
 import ListeRessourcesView from '@/views/Ressources/ListeRessourcesView.vue'
 import MetierDetails from '@/views/Metiers/MetierDetails.vue'
@@ -48,12 +47,6 @@ const router = createRouter({
       path: '/ecoles/:diplomeId', 
       name: 'ecoles',
       component: EcolesView, 
-      props: true 
-    },
-    {
-      path: '/ecole/:ecoleId', 
-      name: 'ecole',
-      component: SingleEcoleView, 
       props: true 
     },
     {

@@ -41,7 +41,7 @@ onMounted(fetchEvents);
                         Conférences, workshops, networking (et peut-être quelques goodies sympas 🍕), viens découvrir
                         les tendances, les
                         menaces du futur et comment ne pas finir dans un phishing douteux.
-                        Bref, si le cyber t'intèresse, c’est *the place to be* en 2025 ! 🔥
+                        Bref, si le cyber t'intèresse, c’est THE place to be en 2025 ! 🔥
                     </p>
 
                 </div>
@@ -148,6 +148,7 @@ onMounted(fetchEvents);
     max-width: 90%;
     margin: 0 auto;
     padding: 40px 20px;
+    margin-bottom: 100px;
 }
 
 /* Titre principal */
@@ -174,7 +175,6 @@ onMounted(fetchEvents);
     display: flex;
     background: #fff;
     border-radius: 12px;
-    max-height: 350px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -278,6 +278,13 @@ h2 {
     color: white;
 }
 
+@media (max-width: 1024px) {
+    .event-image {
+        object-fit: cover;
+    }
+
+}
+
 /* Responsive pour mobiles */
 @media (max-width: 768px) {
     .event-card {
@@ -293,7 +300,7 @@ h2 {
     }
 
     .event-content {
-        width: 100%;
+        width: 90%;
         padding: 15px;
     }
 
@@ -302,6 +309,16 @@ h2 {
         left: 8px;
         font-size: 0.8rem;
         padding: 4px 10px;
+    }
+
+    .intro-title h1 {
+        font-size: 1.8rem;
+        width: 95%;
+    }
+
+    .intro-title p {
+        font-size: 0.9rem;
+        width: 95%;
     }
 }
 </style>

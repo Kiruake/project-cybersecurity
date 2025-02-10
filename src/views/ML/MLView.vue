@@ -92,4 +92,11 @@ li {
     color: #333;
     line-height: 1.8;
 }
+
+@media (max-width: 530px) {
+
+    .legal-title {
+        font-size: 2.5rem;
+    }
+}
 </style>
